@@ -1,0 +1,57 @@
+# verb-Teams.psm1
+
+
+<#
+.SYNOPSIS
+verb-Teams - Powershell Teams generic functions module
+.NOTES
+Version     : 1.0.0.0
+Author      : Todd Kadrie
+Website     :	https://www.toddomation.com
+Twitter     :	@tostka
+CreatedDate : 5/12/2020
+FileName    : verb-Teams.psm1
+License     : MIT
+Copyright   : (c) 5/12/2020 Todd Kadrie
+Github      : https://github.com/tostka
+AddedCredit : REFERENCE
+AddedWebsite:	REFERENCEURL
+AddedTwitter:	@HANDLE / http://twitter.com/HANDLE
+REVISIONS
+* 5/12/2020 - 1.0.0.0
+* 9:37 AM 5/12/2020 genericized for module port
+# 11:38 AM 12/30/2019 ran vsc alias-expan
+* 10:55 AM 12/6/2019 Connect-Teams:added suffix to TitleBar tag for non-TOR tenants, also config'd a central tab vari
+* 5:14 PM 11/27/2019 repl $MFA code with get-TenantMFARequirement
+* 1:07 PM 11/25/2019 added *tol/*tor/*cmw alias variants for connect & reconnect
+# 8:23 PM 11/20/2019 refacored for updated MFA
+* 11:04 AM 6/17/2019 fixed typos, remmed TenentID matrl, really strippedback
+* 8:39 AM 6/17/2019 init version
+.DESCRIPTION
+verb-Teams - Powershell Teams generic functions module
+.EXAMPLE
+.EXAMPLE
+.LINK
+https://github.com/tostka/verb-Teams
+#>
+
+
+$script:ModuleRoot = $PSScriptRoot ; 
+$script:ModuleVersion = (Import-PowerShellDataFile -Path (get-childitem $script:moduleroot\*.psd1).fullname).moduleversion ; 
+
+#Get public and private function definition files.
+$functionFolders = @('Public', 'Internal', 'Classes') ;
+ForEach ($folder in $functionFolders) {
+    $folderPath = Join-Path -Path $PSScriptRoot -ChildPath $folder ;
+    If (Test-Path -Path $folderPath) {
+        Write-Verbose -Message "Importing from $folder" ;
+        $functions = Get-ChildItem -Path $folderPath -Filter '*.ps1'  ;
+        ForEach ($function in $functions) {
+            Write-Verbose -Message "  Importing $($function.BaseName)" ;
+            . $($function.FullName) ;
+        } ;
+    } ;
+} ;
+$publicFunctions = (Get-ChildItem -Path "$PSScriptRoot\Public" -Filter '*.ps1').BaseName ;
+Export-ModuleMember -Function $publicFunctions -Alias * ; 
+
