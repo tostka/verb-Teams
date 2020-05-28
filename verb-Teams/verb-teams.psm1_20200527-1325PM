@@ -1,11 +1,11 @@
-﻿# verb-teams.psm1
+﻿# verb-Teams.psm1
 
 
 <#
 .SYNOPSIS
 verb-Teams - Powershell Teams generic functions module
 .NOTES
-Version     : 1.0.4.0
+Version     : 1.0.3.0
 Author      : Todd Kadrie
 Website     :	https://www.toddomation.com
 Twitter     :	@tostka
@@ -49,20 +49,10 @@ Function Connect-Teams {
     .SYNOPSIS
     Connect-Teams - Establish PSS to https://ps.compliance.protection.outlook.com/powershell-liveid/
     .NOTES
-    Author: Todd Kadrie
-    Website:	http://toddomation.com
-    Twitter     :	@tostka / http://twitter.com/tostka
-    AddedCredit : Inspired by concept code by ExactMike Perficient, Global Knowl... (Partner)
-    AddedWebsite:	https://social.technet.microsoft.com/Forums/msonline/en-US/f3292898-9b8c-482a-86f0-3caccc0bd3e5/exchange-powershell-monitoring-remote-sessions?forum=onlineservicesexchange
-    Version     : 1.1.0
-    CreatedDate : 2020-02-24
-    FileName    : Connect-Ex2010()
-    License     : MIT License
-    Copyright   : (c) 2020 Todd Kadrie
-    Github      : https://github.com/tostka
-    Tags        : Powershell,Teams
+    Author: : Todd Kadrie
+    Website:	https://www.toddomation.com
+    Twitter:	https://twitter.com/tostka
     REVISIONS   :
-    * 12:32 PM 5/27/2020 updated cbh, added alias cTms win func
     * 10:55 AM 12/6/2019 Connect-Teams:added suffix to TitleBar tag for non-TOR tenants, also config'd a central tab vari
     * 5:14 PM 11/27/2019 repl $MFA code with get-TenantMFARequirement
     * 1:07 PM 11/25/2019 added *tol/*tor/*cmw alias variants for connect & reconnect
@@ -129,14 +119,15 @@ PARAMETERS
     -WhatIf [<SwitchParameter>]
         Shows what would happen if the cmdlet runs. The cmdlet is not run.
 #>
-    [CmdletBinding()]
-    [Alias('cTms')]
+
+#[Parameter(HelpMessage="TenantID [-TenantID]")]$TenantID= "toroco",  10:21 AM 6/17/2019 (THRU ERROR DEFAULTING IT)
    Param(
         [Parameter(HelpMessage="Credential to use for this connection [-credential 'logon@DOMAIN.com']")]
         $Credential = $global:credo365TORSID,
         [Parameter(HelpMessage="Debugging Flag [-showDebug]")]
         [switch] $showDebug
     ) ;
+
     # 12:10 PM 3/15/2017 disable prefix spec, unless actually blanked (e.g. centrally spec'd in profile).
     if(!$CommandPrefix){ $CommandPrefix='' ; } ;
 
@@ -278,25 +269,15 @@ Function Reconnect-Teams {
     Reconnect-Teams - Test and reestablish PSS to https://ps.outlook.com/powershell/
     .NOTES
     Author: Todd Kadrie
-    Website:	http://toddomation.com
-    Twitter     :	@tostka / http://twitter.com/tostka
-    AddedCredit : Inspired by concept code by ExactMike Perficient, Global Knowl... (Partner)
-    AddedWebsite:	https://social.technet.microsoft.com/Forums/msonline/en-US/f3292898-9b8c-482a-86f0-3caccc0bd3e5/exchange-powershell-monitoring-remote-sessions?forum=onlineservicesexchange
-    Version     : 1.1.0
-    CreatedDate : 2020-02-24
-    FileName    : Connect-Ex2010()
-    License     : MIT License
-    Copyright   : (c) 2020 Todd Kadrie
-    Github      : https://github.com/tostka
-    Tags        : Powershell
+    Website:	https://www.toddomation.com
+    Twitter:	https://twitter.com/tostka
+    Port of my verb-EXO functs for o365 Sec & Compliance Ctr RemPS
     REVISIONS   :
-    * 12:34 PM 5/27/2020 updated cbh, added alias:rtms
     * 1:07 PM 11/25/2019 added *tol/*tor/*cmw alias variants for connect & reconnect
     # 8:28 PM 11/20/2019 updated for cred & mfa
     # 1:24 PM 11/7/2018 switch the test to $EOLSession.state -ne 'Opened' -AND $EOLSession.Availability -ne 'Available'
     # 1:04 PM 6/20/2018 Teams variant, works
     .DESCRIPTION
-    Port of my verb-EXO functs for o365 Sec & Compliance Ctr RemPS
     I use this for routine test/reconnect of Teams.
     .PARAMETER  Credential
     Credential to use for this connection [-credential 'logon@domain.com']
@@ -309,8 +290,7 @@ Function Reconnect-Teams {
     .LINK
     https://social.technet.microsoft.com/Forums/msonline/en-US/f3292898-9b8c-482a-86f0-3caccc0bd3e5/exchange-powershell-monitoring-remote-sessions?forum=onlineservicesexchange
     #>
-    [CmdletBinding()]
-    [Alias('rTms')]
+
     Param(
       [Parameter(HelpMessage="Credential to use for this connection [-credential [credential obj variable]")][System.Management.Automation.PSCredential]$Credential = $global:credo365TORSID,
       [Parameter(HelpMessage="Debugging Flag [-showDebug]")]
@@ -352,8 +332,8 @@ Export-ModuleMember -Function Connect-Teams,cTmscmw,cTmstol,cTmstor,Disconnect-T
 # SIG # Begin signature block
 # MIIELgYJKoZIhvcNAQcCoIIEHzCCBBsCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQU0nlHnDBzWjuZm5sfw2i8MvP/
-# cg6gggI4MIICNDCCAaGgAwIBAgIQWsnStFUuSIVNR8uhNSlE6TAJBgUrDgMCHQUA
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUMKTCSpXVRhBc+NvUEvcftbfj
+# zImgggI4MIICNDCCAaGgAwIBAgIQWsnStFUuSIVNR8uhNSlE6TAJBgUrDgMCHQUA
 # MCwxKjAoBgNVBAMTIVBvd2VyU2hlbGwgTG9jYWwgQ2VydGlmaWNhdGUgUm9vdDAe
 # Fw0xNDEyMjkxNzA3MzNaFw0zOTEyMzEyMzU5NTlaMBUxEzARBgNVBAMTClRvZGRT
 # ZWxmSUkwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBALqRVt7uNweTkZZ+16QG
@@ -368,9 +348,9 @@ Export-ModuleMember -Function Connect-Teams,cTmscmw,cTmstol,cTmstor,Disconnect-T
 # AWAwggFcAgEBMEAwLDEqMCgGA1UEAxMhUG93ZXJTaGVsbCBMb2NhbCBDZXJ0aWZp
 # Y2F0ZSBSb290AhBaydK0VS5IhU1Hy6E1KUTpMAkGBSsOAwIaBQCgeDAYBgorBgEE
 # AYI3AgEMMQowCKACgAChAoAAMBkGCSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwG
-# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBRom4gN
-# j02QrRDg4yz4H2mulOCgcDANBgkqhkiG9w0BAQEFAASBgG/DzPh7ZRLwPRT5I8g8
-# K/uOI1pf98hikWChBi1CNI/dYKi/ECAp4BqZyRfqHq1sOX9gKfeEFTYipE83ZgKA
-# R2bobgFttcubKVVJ3mHWlTvOL1LIqy3RxQ9lwoKrjDVsrU67QdcwK5BpQMNcnFDZ
-# VOGroGNwN9fAFIppMkcoh7OB
+# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBSojuF9
+# +fvKkQ9hr3R0A1E6vbMBBjANBgkqhkiG9w0BAQEFAASBgFS2HVQ5XR+XXbEoqGQY
+# MdvG49iNakbxqf2yD2MdjpUlMLOj/kH2oXthTn++L8iy5dKR2+gVUbyhGQKMki/t
+# JIzIb0OlMaq7KDWJP+YlzuTZtga68paoSq8njliQy8ekWlsS0Ek1casvS2Cx8VGj
+# Jbj42ADxpgErfgD4hvdBwmX4
 # SIG # End signature block

@@ -4,10 +4,20 @@ Function Connect-Teams {
     .SYNOPSIS
     Connect-Teams - Establish PSS to https://ps.compliance.protection.outlook.com/powershell-liveid/
     .NOTES
-    Author: : Todd Kadrie
-    Website:	https://www.toddomation.com
-    Twitter:	https://twitter.com/tostka
+    Author: Todd Kadrie
+    Website:	http://toddomation.com
+    Twitter     :	@tostka / http://twitter.com/tostka
+    AddedCredit : Inspired by concept code by ExactMike Perficient, Global Knowl... (Partner)
+    AddedWebsite:	https://social.technet.microsoft.com/Forums/msonline/en-US/f3292898-9b8c-482a-86f0-3caccc0bd3e5/exchange-powershell-monitoring-remote-sessions?forum=onlineservicesexchange
+    Version     : 1.1.0
+    CreatedDate : 2020-02-24
+    FileName    : Connect-Ex2010()
+    License     : MIT License
+    Copyright   : (c) 2020 Todd Kadrie
+    Github      : https://github.com/tostka
+    Tags        : Powershell,Teams
     REVISIONS   :
+    * 12:32 PM 5/27/2020 updated cbh, added alias cTms win func
     * 10:55 AM 12/6/2019 Connect-Teams:added suffix to TitleBar tag for non-TOR tenants, also config'd a central tab vari
     * 5:14 PM 11/27/2019 repl $MFA code with get-TenantMFARequirement
     * 1:07 PM 11/25/2019 added *tol/*tor/*cmw alias variants for connect & reconnect
@@ -74,15 +84,14 @@ PARAMETERS
     -WhatIf [<SwitchParameter>]
         Shows what would happen if the cmdlet runs. The cmdlet is not run.
 #>
-
-#[Parameter(HelpMessage="TenantID [-TenantID]")]$TenantID= "toroco",  10:21 AM 6/17/2019 (THRU ERROR DEFAULTING IT)
+    [CmdletBinding()]
+    [Alias('cTms')]
    Param(
         [Parameter(HelpMessage="Credential to use for this connection [-credential 'logon@DOMAIN.com']")]
         $Credential = $global:credo365TORSID,
         [Parameter(HelpMessage="Debugging Flag [-showDebug]")]
         [switch] $showDebug
     ) ;
-
     # 12:10 PM 3/15/2017 disable prefix spec, unless actually blanked (e.g. centrally spec'd in profile).
     if(!$CommandPrefix){ $CommandPrefix='' ; } ;
 
@@ -162,5 +171,4 @@ if(!(get-command -Name get-TeamHelp)){
         } # try-E
     } Until ($Exit -eq $Retries) # loop-E
 }
-
 #*------^ Connect-Teams.ps1 ^------
