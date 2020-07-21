@@ -12,7 +12,7 @@
 RootModule = 'verb-Teams.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.4'
+ModuleVersion = '1.0.6'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -69,7 +69,7 @@ Description = 'Powershell Teams generic functions module'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = @('Connect-Teams','cTmscmw','cTmstol','cTmstor','Disconnect-Teams','Reconnect-Teams','rTmscmw','rTmstol','rTmstor')
+FunctionsToExport = @('Connect-Teams','cTmscmw','cTmstol','cTmstor','cTmsVEN','Disconnect-Teams','Reconnect-Teams','rTmscmw','rTmstol','rTmstor','rTmsVEN')
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = '*'
@@ -126,8 +126,8 @@ PrivateData = @{
 # SIG # Begin signature block
 # MIIELgYJKoZIhvcNAQcCoIIEHzCCBBsCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUPr0CauM41Cmf7j3cQ9WBpPbM
-# q/WgggI4MIICNDCCAaGgAwIBAgIQWsnStFUuSIVNR8uhNSlE6TAJBgUrDgMCHQUA
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUbt5CArBURXKSFekOU4WHJ9gv
+# j82gggI4MIICNDCCAaGgAwIBAgIQWsnStFUuSIVNR8uhNSlE6TAJBgUrDgMCHQUA
 # MCwxKjAoBgNVBAMTIVBvd2VyU2hlbGwgTG9jYWwgQ2VydGlmaWNhdGUgUm9vdDAe
 # Fw0xNDEyMjkxNzA3MzNaFw0zOTEyMzEyMzU5NTlaMBUxEzARBgNVBAMTClRvZGRT
 # ZWxmSUkwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBALqRVt7uNweTkZZ+16QG
@@ -142,9 +142,9 @@ PrivateData = @{
 # AWAwggFcAgEBMEAwLDEqMCgGA1UEAxMhUG93ZXJTaGVsbCBMb2NhbCBDZXJ0aWZp
 # Y2F0ZSBSb290AhBaydK0VS5IhU1Hy6E1KUTpMAkGBSsOAwIaBQCgeDAYBgorBgEE
 # AYI3AgEMMQowCKACgAChAoAAMBkGCSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwG
-# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBSKiyGe
-# 1hdtmyucbJyEad8/C43uZjANBgkqhkiG9w0BAQEFAASBgG1475LayztMCxYK6viy
-# ECEDQxrqdxvcZu6yF/16n+E3yE7J3iMR2Gxw1tQwNK1i8IWNw6kdcjpaRuSJR7v7
-# oyNTfD/IgSdS/48UZepFxnDFAZRzcQ9a6I9LeoP9tGHnkb+BeoKucBj+O808E6BW
-# m/zifpsRXj3fX8aWPlV5z3sj
+# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBRlQTPW
+# AIaa/Af4jGkeF56h3SBDDDANBgkqhkiG9w0BAQEFAASBgAizGOgTJ48qCVB6Pf1g
+# dvkZpTXI22qY5fenDhcuoVAoqkwmQcNuc358wFPtRKjagQz/3RvSiPBZO1nmHfId
+# xjb3vzHZBRGTtjlft+O37VXBKrA52m6cJqRTUL7jBbspmi5fV2NJQqyJmI5E671a
+# wvxccqXNe6pkE+HMuYKIa2Rl
 # SIG # End signature block

@@ -17,6 +17,7 @@ Function Connect-Teams {
     Github      : https://github.com/tostka
     Tags        : Powershell,Teams
     REVISIONS   :
+    * 5:20 PM 7/21/2020 added ven supp
     * 12:32 PM 5/27/2020 updated cbh, added alias cTms win func
     * 10:55 AM 12/6/2019 Connect-Teams:added suffix to TitleBar tag for non-TOR tenants, also config'd a central tab vari
     * 5:14 PM 11/27/2019 repl $MFA code with get-TenantMFARequirement
@@ -96,19 +97,26 @@ PARAMETERS
     if(!$CommandPrefix){ $CommandPrefix='' ; } ;
 
     $sTitleBarTag="Teams" ;
-    if($Credential){
-        switch -regex ($Credential.username.split('@')[1]){
-            "toro\.com" {
-                # leave untagged
-             }
-             "torolab\.com" {
-                $sTitleBarTag = $sTitleBarTag + "tlab"
-            }
-            "(charlesmachineworks\.onmicrosoft\.com|charlesmachine\.works)" {
-                $sTitleBarTag = $sTitleBarTag + "cmw"
-            }
-        } ;
-    } ;
+    $credDom = ($Credential.username.split("@"))[1] ;
+    if($Credential.username.contains('.onmicrosoft.com')){
+        # cloud-first acct
+        switch ($credDom){
+            "$($TORMeta['o365_TenantDomain'])" { } 
+            "$($TOLMeta['o365_TenantDomain'])" {$sTitleBarTag += $TOLMeta['o365_Prefix']}
+            "$($CMWMeta['o365_TenantDomain'])" {$sTitleBarTag += $CMWMeta['o365_Prefix']}
+            "$($VENMeta['o365_TenantDomain'])" {$sTitleBarTag += $VENMeta['o365_Prefix']}
+            default {throw "Failed to resolve a `$credVariTag` from populated global 'o365_TenantDomain' props, for credential domain:$($CredDom)" } ;
+        } ; 
+    } else { 
+        # OP federated domain
+        switch ($credDom){
+            "$($TORMeta['o365_OPDomain'])" { }
+            "$($TOLMeta['o365_OPDomain'])" {$sTitleBarTag += $TOLMeta['o365_Prefix']}
+            "$($CMWMeta['o365_OPDomain'])" {$sTitleBarTag += $CMWMeta['o365_Prefix']}
+            "$($VENMeta['o365_OPDomain'])" {$sTitleBarTag += $VENMeta['o365_Prefix']}
+            default {throw "Failed to resolve a `$credVariTag` from populated global 'o365_OPDomain' props, for credential domain:$($CredDom)" } ;
+        } ; 
+    } ; 
 
     # shift to pulling the $MFA auto by splitting the credential and checking the o365_*_OPDomain & o365_$($credVariTag)_MFA global varis
     $MFA = get-TenantMFARequirement -Credential $Credential ;

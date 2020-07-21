@@ -1,11 +1,11 @@
-﻿# verb-teams.psm1
+﻿# verb-Teams.psm1
 
 
 <#
 .SYNOPSIS
 verb-Teams - Powershell Teams generic functions module
 .NOTES
-Version     : 1.0.4.0
+Version     : 1.0.6.0
 Author      : Todd Kadrie
 Website     :	https://www.toddomation.com
 Twitter     :	@tostka
@@ -62,6 +62,7 @@ Function Connect-Teams {
     Github      : https://github.com/tostka
     Tags        : Powershell,Teams
     REVISIONS   :
+    * 5:20 PM 7/21/2020 added ven supp
     * 12:32 PM 5/27/2020 updated cbh, added alias cTms win func
     * 10:55 AM 12/6/2019 Connect-Teams:added suffix to TitleBar tag for non-TOR tenants, also config'd a central tab vari
     * 5:14 PM 11/27/2019 repl $MFA code with get-TenantMFARequirement
@@ -141,19 +142,26 @@ PARAMETERS
     if(!$CommandPrefix){ $CommandPrefix='' ; } ;
 
     $sTitleBarTag="Teams" ;
-    if($Credential){
-        switch -regex ($Credential.username.split('@')[1]){
-            "toro\.com" {
-                # leave untagged
-             }
-             "torolab\.com" {
-                $sTitleBarTag = $sTitleBarTag + "tlab"
-            }
-            "(charlesmachineworks\.onmicrosoft\.com|charlesmachine\.works)" {
-                $sTitleBarTag = $sTitleBarTag + "cmw"
-            }
-        } ;
-    } ;
+    $credDom = ($Credential.username.split("@"))[1] ;
+    if($Credential.username.contains('.onmicrosoft.com')){
+        # cloud-first acct
+        switch ($credDom){
+            "$($TORMeta['o365_TenantDomain'])" { } 
+            "$($TOLMeta['o365_TenantDomain'])" {$sTitleBarTag += $TOLMeta['o365_Prefix']}
+            "$($CMWMeta['o365_TenantDomain'])" {$sTitleBarTag += $CMWMeta['o365_Prefix']}
+            "$($VENMeta['o365_TenantDomain'])" {$sTitleBarTag += $VENMeta['o365_Prefix']}
+            default {throw "Failed to resolve a `$credVariTag` from populated global 'o365_TenantDomain' props, for credential domain:$($CredDom)" } ;
+        } ; 
+    } else { 
+        # OP federated domain
+        switch ($credDom){
+            "$($TORMeta['o365_OPDomain'])" { }
+            "$($TOLMeta['o365_OPDomain'])" {$sTitleBarTag += $TOLMeta['o365_Prefix']}
+            "$($CMWMeta['o365_OPDomain'])" {$sTitleBarTag += $CMWMeta['o365_Prefix']}
+            "$($VENMeta['o365_OPDomain'])" {$sTitleBarTag += $VENMeta['o365_Prefix']}
+            default {throw "Failed to resolve a `$credVariTag` from populated global 'o365_OPDomain' props, for credential domain:$($CredDom)" } ;
+        } ; 
+    } ; 
 
     # shift to pulling the $MFA auto by splitting the credential and checking the o365_*_OPDomain & o365_$($credVariTag)_MFA global varis
     $MFA = get-TenantMFARequirement -Credential $Credential ;
@@ -233,6 +241,11 @@ function cTmstol {Connect-Teams -cred $credO365TOLSID}
 function cTmstor {Connect-Teams -cred $credO365TORSID}
 
 #*------^ cTmstor.ps1 ^------
+
+#*------v cTmsVEN.ps1 v------
+function cTmsVEN {Connect-Teams -cred $credO365VENCSID}
+
+#*------^ cTmsVEN.ps1 ^------
 
 #*------v Disconnect-Teams.ps1 v------
 Function Disconnect-Teams {
@@ -344,16 +357,21 @@ function rTmstor {Reconnect-Teams -cred $credO365TORSID}
 
 #*------^ rTmstor.ps1 ^------
 
+#*------v rTmsVEN.ps1 v------
+function rTmsVEN {Reconnect-Teams -cred $credO365VENCSID}
+
+#*------^ rTmsVEN.ps1 ^------
+
 #*======^ END FUNCTIONS ^======
 
-Export-ModuleMember -Function Connect-Teams,cTmscmw,cTmstol,cTmstor,Disconnect-Teams,Reconnect-Teams,rTmscmw,rTmstol,rTmstor -Alias *
+Export-ModuleMember -Function Connect-Teams,cTmscmw,cTmstol,cTmstor,cTmsVEN,Disconnect-Teams,Reconnect-Teams,rTmscmw,rTmstol,rTmstor,rTmsVEN -Alias *
 
 
 # SIG # Begin signature block
 # MIIELgYJKoZIhvcNAQcCoIIEHzCCBBsCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQU0nlHnDBzWjuZm5sfw2i8MvP/
-# cg6gggI4MIICNDCCAaGgAwIBAgIQWsnStFUuSIVNR8uhNSlE6TAJBgUrDgMCHQUA
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUNilwle2RSmLLcCZJ2NT0/vbx
+# HB6gggI4MIICNDCCAaGgAwIBAgIQWsnStFUuSIVNR8uhNSlE6TAJBgUrDgMCHQUA
 # MCwxKjAoBgNVBAMTIVBvd2VyU2hlbGwgTG9jYWwgQ2VydGlmaWNhdGUgUm9vdDAe
 # Fw0xNDEyMjkxNzA3MzNaFw0zOTEyMzEyMzU5NTlaMBUxEzARBgNVBAMTClRvZGRT
 # ZWxmSUkwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBALqRVt7uNweTkZZ+16QG
@@ -368,9 +386,9 @@ Export-ModuleMember -Function Connect-Teams,cTmscmw,cTmstol,cTmstor,Disconnect-T
 # AWAwggFcAgEBMEAwLDEqMCgGA1UEAxMhUG93ZXJTaGVsbCBMb2NhbCBDZXJ0aWZp
 # Y2F0ZSBSb290AhBaydK0VS5IhU1Hy6E1KUTpMAkGBSsOAwIaBQCgeDAYBgorBgEE
 # AYI3AgEMMQowCKACgAChAoAAMBkGCSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwG
-# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBRom4gN
-# j02QrRDg4yz4H2mulOCgcDANBgkqhkiG9w0BAQEFAASBgG/DzPh7ZRLwPRT5I8g8
-# K/uOI1pf98hikWChBi1CNI/dYKi/ECAp4BqZyRfqHq1sOX9gKfeEFTYipE83ZgKA
-# R2bobgFttcubKVVJ3mHWlTvOL1LIqy3RxQ9lwoKrjDVsrU67QdcwK5BpQMNcnFDZ
-# VOGroGNwN9fAFIppMkcoh7OB
+# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBS1RF86
+# yRzM2QIpgClIwvunOvx3QzANBgkqhkiG9w0BAQEFAASBgIUhHAnmFe3HQ51LTKkY
+# 29YDU9lNWZ9FUSm8aIFtGqvk7r12jK9mz8UQ0QjwuJgTLXUfkVePy8zhLcy6pHnt
+# mN/QC4Zu4TJBGoug3whFx4jE44rIN02JqL6SDx+F6SZIgBDXM9RRT+pOvXSyEadu
+# QaRK/WVxphwlSLm1/6vKj95n
 # SIG # End signature block
