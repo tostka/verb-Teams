@@ -5,7 +5,7 @@
 .SYNOPSIS
 verb-Teams - Powershell Teams generic functions module
 .NOTES
-Version     : 1.0.5.0
+Version     : 1.0.6.0
 Author      : Todd Kadrie
 Website     :	https://www.toddomation.com
 Twitter     :	@tostka
@@ -62,6 +62,7 @@ Function Connect-Teams {
     Github      : https://github.com/tostka
     Tags        : Powershell,Teams
     REVISIONS   :
+    * 7:13 AM 7/22/2020 replaced codeblock w get-TenantTag()
     * 5:20 PM 7/21/2020 added ven supp
     * 12:32 PM 5/27/2020 updated cbh, added alias cTms win func
     * 10:55 AM 12/6/2019 Connect-Teams:added suffix to TitleBar tag for non-TOR tenants, also config'd a central tab vari
@@ -141,48 +142,44 @@ PARAMETERS
     # 12:10 PM 3/15/2017 disable prefix spec, unless actually blanked (e.g. centrally spec'd in profile).
     if(!$CommandPrefix){ $CommandPrefix='' ; } ;
 
-    $sTitleBarTag="Teams" ;
-    $credDom = ($Credential.username.split("@"))[1] ;
-    if($Credential.username.contains('.onmicrosoft.com')){
-        # cloud-first acct
-        switch ($credDom){
-            "$($TORMeta['o365_TenantDomain'])" { } 
-            "$($TOLMeta['o365_TenantDomain'])" {$sTitleBarTag += $TOLMeta['o365_Prefix']}
-            "$($CMWMeta['o365_TenantDomain'])" {$sTitleBarTag += $CMWMeta['o365_Prefix']}
-            "$($VENMeta['o365_TenantDomain'])" {$sTitleBarTag += $VENMeta['o365_Prefix']}
-            default {throw "Failed to resolve a `$credVariTag` from populated global 'o365_TenantDomain' props, for credential domain:$($CredDom)" } ;
-        } ; 
-    } else { 
-        # OP federated domain
-        switch ($credDom){
-            "$($TORMeta['o365_OPDomain'])" { }
-            "$($TOLMeta['o365_OPDomain'])" {$sTitleBarTag += $TOLMeta['o365_Prefix']}
-            "$($CMWMeta['o365_OPDomain'])" {$sTitleBarTag += $CMWMeta['o365_Prefix']}
-            "$($VENMeta['o365_OPDomain'])" {$sTitleBarTag += $VENMeta['o365_Prefix']}
-            default {throw "Failed to resolve a `$credVariTag` from populated global 'o365_OPDomain' props, for credential domain:$($CredDom)" } ;
-        } ; 
-    } ; 
-
     # shift to pulling the $MFA auto by splitting the credential and checking the o365_*_OPDomain & o365_$($credVariTag)_MFA global varis
     $MFA = get-TenantMFARequirement -Credential $Credential ;
-
-    $tenantID="549366ae-e80a-44b9-8adc-52d0c29ba08b" ;
-if(!(get-command -Name get-TeamHelp)){
-    Try { Get-Module MicrosoftTeams -ListAvailable -ErrorAction Stop | out-null } Catch {
-        if(get-module PowerShellGet){ Install-Module MicrosoftTeams -scope CurrentUser }
-        else { throw "REQUIRES WIN10, PSV5+ OR installed PowerShellGet module" } ;
-    } ;
-    Try {Get-Module MicrosoftTeams -ErrorAction Stop | out-null } Catch {Import-Module -Name MicrosoftTeams -ErrorAction Stop  } ;
-    Connect-MicrosoftTeams -TenantID $tenantID -cred $cred ;
-} else { write-verbose -verbose:$true "(Teams already connected)" } ;
-
+    
+    $sTitleBarTag="Teams" ;
+    $TentantTag=get-TenantTag -Credential $Credential ; 
+    if($TentantTag -ne 'TOR'){
+        # explicitly leave this tenant (default) untagged
+        $sTitleBarTag += $TentantTag ;
+    } ; 
+    
+    $tenantID=$null ; 
+    $credDom = ($Credential.username.split("@"))[1] ;
+    $Metas=(gv *meta|?{$_.name -match '^\w{3}Meta$'}) ; 
+    foreach ($Meta in $Metas){
+        if( ($credDom -eq $Meta.value.o365_TenantDomain) -OR ($credDom -eq $Meta.value.o365_OPDomain)){
+            $TentantID=$Meta.value.o365_TenantID ; 
+            break ; 
+        } ; 
+    } ; 
+       
+     <# non-MFA code - appears to be redundant to below
+    if(!(get-command -Name get-TeamHelp)){
+        Try { Get-Module MicrosoftTeams -ListAvailable -ErrorAction Stop | out-null } Catch {
+            if(get-module PowerShellGet){ Install-Module MicrosoftTeams -scope CurrentUser }
+            else { throw "REQUIRES WIN10, PSV5+ OR installed PowerShellGet module" } ;
+        } ;
+        Try {Get-Module MicrosoftTeams -ErrorAction Stop | out-null } Catch {Import-Module -Name MicrosoftTeams -ErrorAction Stop  } ;
+        Connect-MicrosoftTeams -TenantID $tenantID -cred $cred ;
+    } else { write-verbose -verbose:$true "(Teams already connected)" } ;
+    #>
 
 
     # 9:17 AM 3/15/2017 Connect-Teams: add quotes around all string/non-boolean/non-int values in the splat
     # TenantID=$TenantID ;
 
-    $Teamssplat=@{
+    $Teamssplat=@{        
     } ;
+    if($TenantID){ $Teamssplat.Add("TenantID",$tenantID) }
 
     if(!(get-command -Name get-TeamHelp)){
         Try { Get-Module MicrosoftTeams -ListAvailable -ErrorAction Stop | out-null } Catch {
