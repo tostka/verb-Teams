@@ -2,7 +2,7 @@
 Function Disconnect-Teams {
     <#
     .SYNOPSIS
-    Disconnect-Teams - Disconnects any PSS to https://ps.outlook.com/powershell/ (cleans up session after a batch or other temp work is done)
+    Disconnect-Teams - Echo's msg that Teams doesn't *support* disconnect cmdlet
     .NOTES
     Updated By: Todd Kadrie
     Website:	https://www.toddomation.com
@@ -30,7 +30,7 @@ Function Disconnect-Teams {
     Disconnect-PssBroken ;
     Remove-PSTitlebar 'Teams' ;
     #>
-    write-host -foregroundcolor green "(teams doesn't support a disconnect commandn)" ;
+    write-host -foregroundcolor green "(teams doesn't support a disconnect command)" ;
 }
 
 #*------^ Disconnect-Teams.ps1 ^------

@@ -1,11 +1,11 @@
-﻿# verb-Teams.psm1
+﻿# verb-teams.psm1
 
 
 <#
 .SYNOPSIS
 verb-Teams - Powershell Teams generic functions module
 .NOTES
-Version     : 1.0.7.0
+Version     : 1.0.8.0
 Author      : Todd Kadrie
 Website     :	https://www.toddomation.com
 Twitter     :	@tostka
@@ -62,6 +62,7 @@ Function Connect-Teams {
     Github      : https://github.com/tostka
     Tags        : Powershell,Teams
     REVISIONS   :
+    * 2:44 PM 3/2/2021 added console TenOrg color support
     * 7:13 AM 7/22/2020 replaced codeblock w get-TenantTag()
     * 5:20 PM 7/21/2020 added ven supp
     * 12:32 PM 5/27/2020 updated cbh, added alias cTms win func
@@ -209,6 +210,10 @@ PARAMETERS
             } ;
             # I want to see where I connected...
             Add-PSTitleBar $sTitleBarTag ;
+            if(($PSFgColor = (Get-Variable  -name "$($TenOrg)Meta").value.PSFgColor) -AND ($PSBgColor = (Get-Variable  -name "$($TenOrg)Meta").value.PSBgColor)){
+                $Host.UI.RawUI.BackgroundColor = $PSBgColor
+                $Host.UI.RawUI.ForegroundColor = $PSFgColor ; 
+            } ;
             $Exit = $Retries ;
         } Catch {
             # capture auth errors - nope, they never get here, if use throw, it doesn't pass in the auth $error, gens a new one.
@@ -248,7 +253,7 @@ function cTmsVEN {Connect-Teams -cred $credO365VENCSID}
 Function Disconnect-Teams {
     <#
     .SYNOPSIS
-    Disconnect-Teams - Disconnects any PSS to https://ps.outlook.com/powershell/ (cleans up session after a batch or other temp work is done)
+    Disconnect-Teams - Echo's msg that Teams doesn't *support* disconnect cmdlet
     .NOTES
     Updated By: Todd Kadrie
     Website:	https://www.toddomation.com
@@ -276,7 +281,7 @@ Function Disconnect-Teams {
     Disconnect-PssBroken ;
     Remove-PSTitlebar 'Teams' ;
     #>
-    write-host -foregroundcolor green "(teams doesn't support a disconnect commandn)" ;
+    write-host -foregroundcolor green "(teams doesn't support a disconnect command)" ;
 }
 
 #*------^ Disconnect-Teams.ps1 ^------
@@ -367,8 +372,8 @@ Export-ModuleMember -Function Connect-Teams,cTmscmw,cTmstol,cTmstor,cTmsVEN,Disc
 # SIG # Begin signature block
 # MIIELgYJKoZIhvcNAQcCoIIEHzCCBBsCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUrFvrk1uwkx5Sb8nVkU2wUADz
-# OGWgggI4MIICNDCCAaGgAwIBAgIQWsnStFUuSIVNR8uhNSlE6TAJBgUrDgMCHQUA
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUliaSWcLGw6olf0NH/oZvPEnm
+# ks2gggI4MIICNDCCAaGgAwIBAgIQWsnStFUuSIVNR8uhNSlE6TAJBgUrDgMCHQUA
 # MCwxKjAoBgNVBAMTIVBvd2VyU2hlbGwgTG9jYWwgQ2VydGlmaWNhdGUgUm9vdDAe
 # Fw0xNDEyMjkxNzA3MzNaFw0zOTEyMzEyMzU5NTlaMBUxEzARBgNVBAMTClRvZGRT
 # ZWxmSUkwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBALqRVt7uNweTkZZ+16QG
@@ -383,9 +388,9 @@ Export-ModuleMember -Function Connect-Teams,cTmscmw,cTmstol,cTmstor,cTmsVEN,Disc
 # AWAwggFcAgEBMEAwLDEqMCgGA1UEAxMhUG93ZXJTaGVsbCBMb2NhbCBDZXJ0aWZp
 # Y2F0ZSBSb290AhBaydK0VS5IhU1Hy6E1KUTpMAkGBSsOAwIaBQCgeDAYBgorBgEE
 # AYI3AgEMMQowCKACgAChAoAAMBkGCSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwG
-# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBSyJKK9
-# UqxPiQPbvJ8lWWPjPTnIODANBgkqhkiG9w0BAQEFAASBgGo/2aPWjlQBBP5fssfP
-# d5XNWjQU8Z8p7mk4sUrgeaOSxSBkac3d6wx1aa2C4fV1Oxs+8eKewEStdMpbMoNg
-# iDI/pJymQA0wipCpw/TtltvU4o19+Zcy1jTo6okrSKrIXRFUQjfNSpTURjPcBUZ1
-# 0U37eWqjGquFdm7HdS4mi9r1
+# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBTKVtsR
+# eloTtv9lwGyV6oCkKYtYfzANBgkqhkiG9w0BAQEFAASBgDVbfFfEMGHHE/aigsEW
+# aOQeoAv0pfDBVTl/cnLVixEdNJBPGqTS1WfWOrCLLoZxLc/pd0SLUrSI2rRJnbdt
+# haCSkqfQ4FRrZn4zg6UhMOI187qCL8lZA0MTZqPuUyrnh+p7fiwjax8M4SoUUuOw
+# tBXMNTNZ7vEzlbsJPLolGS2W
 # SIG # End signature block
