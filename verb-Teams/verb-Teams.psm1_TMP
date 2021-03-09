@@ -5,7 +5,7 @@
 .SYNOPSIS
 verb-Teams - Powershell Teams generic functions module
 .NOTES
-Version     : 1.0.7.0
+Version     : 1.0.9.0
 Author      : Todd Kadrie
 Website     :	https://www.toddomation.com
 Twitter     :	@tostka
@@ -190,7 +190,8 @@ PARAMETERS
         Try {Get-Module MicrosoftTeams -ErrorAction Stop | out-null } Catch {Import-Module -Name MicrosoftTeams -ErrorAction Stop  } ;
         if(!$MFA){ $Teamssplat.Add("Credential",$Credential) }
         else { $Teamssplat.Add("AccountId",$Credential.username) }
-    } else { write-verbose -verbose:$true "(Teams already connected)" } ;
+        write-verbose "(using cred:$($credential.username))" ; 
+    } else { write-host -foregroundcolor yellow "(Teams already connected)" } ;
 
     Write-Host "Connect-MicrosoftTeams..."  ;
     $Exit = 0 ; # zero out $exit each new cmd try/retried
@@ -210,10 +211,13 @@ PARAMETERS
             } ;
             # I want to see where I connected...
             Add-PSTitleBar $sTitleBarTag ;
+            <# borked by psreadline v1/v2 breaking changes
             if(($PSFgColor = (Get-Variable  -name "$($TenOrg)Meta").value.PSFgColor) -AND ($PSBgColor = (Get-Variable  -name "$($TenOrg)Meta").value.PSBgColor)){
+                write-verbose "(setting console colors:$($TenOrg)Meta.PSFgColor:$($PSFgColor),PSBgColor:$($PSBgColor))" ; 
                 $Host.UI.RawUI.BackgroundColor = $PSBgColor
                 $Host.UI.RawUI.ForegroundColor = $PSFgColor ; 
             } ;
+            #>
             $Exit = $Retries ;
         } Catch {
             # capture auth errors - nope, they never get here, if use throw, it doesn't pass in the auth $error, gens a new one.

@@ -5,7 +5,7 @@
 .SYNOPSIS
 verb-Teams - Powershell Teams generic functions module
 .NOTES
-Version     : 1.0.8.0
+Version     : 1.0.10.0
 Author      : Todd Kadrie
 Website     :	https://www.toddomation.com
 Twitter     :	@tostka
@@ -190,7 +190,8 @@ PARAMETERS
         Try {Get-Module MicrosoftTeams -ErrorAction Stop | out-null } Catch {Import-Module -Name MicrosoftTeams -ErrorAction Stop  } ;
         if(!$MFA){ $Teamssplat.Add("Credential",$Credential) }
         else { $Teamssplat.Add("AccountId",$Credential.username) }
-    } else { write-verbose -verbose:$true "(Teams already connected)" } ;
+        write-verbose "(using cred:$($credential.username))" ; 
+    } else { write-host -foregroundcolor yellow "(Teams already connected)" } ;
 
     Write-Host "Connect-MicrosoftTeams..."  ;
     $Exit = 0 ; # zero out $exit each new cmd try/retried
@@ -210,10 +211,13 @@ PARAMETERS
             } ;
             # I want to see where I connected...
             Add-PSTitleBar $sTitleBarTag ;
+            <# borked by psreadline v1/v2 breaking changes
             if(($PSFgColor = (Get-Variable  -name "$($TenOrg)Meta").value.PSFgColor) -AND ($PSBgColor = (Get-Variable  -name "$($TenOrg)Meta").value.PSBgColor)){
+                write-verbose "(setting console colors:$($TenOrg)Meta.PSFgColor:$($PSFgColor),PSBgColor:$($PSBgColor))" ; 
                 $Host.UI.RawUI.BackgroundColor = $PSBgColor
                 $Host.UI.RawUI.ForegroundColor = $PSFgColor ; 
             } ;
+            #>
             $Exit = $Retries ;
         } Catch {
             # capture auth errors - nope, they never get here, if use throw, it doesn't pass in the auth $error, gens a new one.
@@ -372,8 +376,8 @@ Export-ModuleMember -Function Connect-Teams,cTmscmw,cTmstol,cTmstor,cTmsVEN,Disc
 # SIG # Begin signature block
 # MIIELgYJKoZIhvcNAQcCoIIEHzCCBBsCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUliaSWcLGw6olf0NH/oZvPEnm
-# ks2gggI4MIICNDCCAaGgAwIBAgIQWsnStFUuSIVNR8uhNSlE6TAJBgUrDgMCHQUA
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUx/lluMQsatGPpP5SGAQLc4Ea
+# PnegggI4MIICNDCCAaGgAwIBAgIQWsnStFUuSIVNR8uhNSlE6TAJBgUrDgMCHQUA
 # MCwxKjAoBgNVBAMTIVBvd2VyU2hlbGwgTG9jYWwgQ2VydGlmaWNhdGUgUm9vdDAe
 # Fw0xNDEyMjkxNzA3MzNaFw0zOTEyMzEyMzU5NTlaMBUxEzARBgNVBAMTClRvZGRT
 # ZWxmSUkwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBALqRVt7uNweTkZZ+16QG
@@ -388,9 +392,9 @@ Export-ModuleMember -Function Connect-Teams,cTmscmw,cTmstol,cTmstor,cTmsVEN,Disc
 # AWAwggFcAgEBMEAwLDEqMCgGA1UEAxMhUG93ZXJTaGVsbCBMb2NhbCBDZXJ0aWZp
 # Y2F0ZSBSb290AhBaydK0VS5IhU1Hy6E1KUTpMAkGBSsOAwIaBQCgeDAYBgorBgEE
 # AYI3AgEMMQowCKACgAChAoAAMBkGCSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwG
-# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBTKVtsR
-# eloTtv9lwGyV6oCkKYtYfzANBgkqhkiG9w0BAQEFAASBgDVbfFfEMGHHE/aigsEW
-# aOQeoAv0pfDBVTl/cnLVixEdNJBPGqTS1WfWOrCLLoZxLc/pd0SLUrSI2rRJnbdt
-# haCSkqfQ4FRrZn4zg6UhMOI187qCL8lZA0MTZqPuUyrnh+p7fiwjax8M4SoUUuOw
-# tBXMNTNZ7vEzlbsJPLolGS2W
+# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBTCkmbV
+# i+zcJ3GZPIhaIrO/0bMLajANBgkqhkiG9w0BAQEFAASBgHArVWcW23czHmD7TTeW
+# C9qub6M92fCDXs7ED2qdJG37Vxz6XmaYWOyddjrhaipfZQyHgS6TXV8C4vVZQObZ
+# /+4DmJZdkvt5JMskYHGs1XSa3Uz70XA3VjrDJslMpMcg1GXTjjFV//7mlFSXXXzd
+# dh57oraPhl9cmYi4APHdOolQ
 # SIG # End signature block
