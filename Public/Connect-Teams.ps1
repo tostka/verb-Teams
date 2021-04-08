@@ -17,6 +17,7 @@ Function Connect-Teams {
     Github      : https://github.com/tostka
     Tags        : Powershell,Teams
     REVISIONS   :
+    * 10:40 AM 4/8/2021 added -ea 0 to the gcm cmd testing for existing conn
     * 2:44 PM 3/2/2021 added console TenOrg color support
     * 7:13 AM 7/22/2020 replaced codeblock w get-TenantTag()
     * 5:20 PM 7/21/2020 added ven supp
@@ -137,7 +138,7 @@ PARAMETERS
     } ;
     if($TenantID){ $Teamssplat.Add("TenantID",$tenantID) }
 
-    if(!(get-command -Name get-TeamHelp)){
+    if(!(get-command -Name get-TeamHelp -ea 0)){
         Try { Get-Module MicrosoftTeams -ListAvailable -ErrorAction Stop | out-null } Catch {
             if(get-module PowerShellGet){ Install-Module MicrosoftTeams -scope CurrentUser }
             else { throw "REQUIRES WIN10, PSV5+ OR installed PowerShellGet module" } ;
