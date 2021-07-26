@@ -5,7 +5,7 @@
 .SYNOPSIS
 verb-Teams - Powershell Teams generic functions module
 .NOTES
-Version     : 1.0.11.0
+Version     : 1.0.12.0
 Author      : Todd Kadrie
 Website     :	https://www.toddomation.com
 Twitter     :	@tostka
@@ -211,7 +211,7 @@ PARAMETERS
                 } ;
             } ;
             # I want to see where I connected...
-            Add-PSTitleBar $sTitleBarTag ;
+            Add-PSTitleBar $sTitleBarTag -verbose:$($VerbosePreference -eq "Continue")  ;
             <# borked by psreadline v1/v2 breaking changes
             if(($PSFgColor = (Get-Variable  -name "$($TenOrg)Meta").value.PSFgColor) -AND ($PSBgColor = (Get-Variable  -name "$($TenOrg)Meta").value.PSBgColor)){
                 write-verbose "(setting console colors:$($TenOrg)Meta.PSFgColor:$($PSFgColor),PSBgColor:$($PSBgColor))" ; 
@@ -377,8 +377,8 @@ Export-ModuleMember -Function Connect-Teams,cTmscmw,cTmstol,cTmstor,cTmsVEN,Disc
 # SIG # Begin signature block
 # MIIELgYJKoZIhvcNAQcCoIIEHzCCBBsCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUndQDPQVWIP4R4xTEZIPxEqPQ
-# QIGgggI4MIICNDCCAaGgAwIBAgIQWsnStFUuSIVNR8uhNSlE6TAJBgUrDgMCHQUA
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUtupC/3IDrmPG++BWi1coAjBo
+# hO2gggI4MIICNDCCAaGgAwIBAgIQWsnStFUuSIVNR8uhNSlE6TAJBgUrDgMCHQUA
 # MCwxKjAoBgNVBAMTIVBvd2VyU2hlbGwgTG9jYWwgQ2VydGlmaWNhdGUgUm9vdDAe
 # Fw0xNDEyMjkxNzA3MzNaFw0zOTEyMzEyMzU5NTlaMBUxEzARBgNVBAMTClRvZGRT
 # ZWxmSUkwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBALqRVt7uNweTkZZ+16QG
@@ -393,9 +393,9 @@ Export-ModuleMember -Function Connect-Teams,cTmscmw,cTmstol,cTmstor,cTmsVEN,Disc
 # AWAwggFcAgEBMEAwLDEqMCgGA1UEAxMhUG93ZXJTaGVsbCBMb2NhbCBDZXJ0aWZp
 # Y2F0ZSBSb290AhBaydK0VS5IhU1Hy6E1KUTpMAkGBSsOAwIaBQCgeDAYBgorBgEE
 # AYI3AgEMMQowCKACgAChAoAAMBkGCSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwG
-# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBTO9LNO
-# PcT/t/YIBIk+LXvRVOt5AzANBgkqhkiG9w0BAQEFAASBgFZOjuUZhxRtSW/vVP41
-# 6XDYwBFZ6RozaimyCZ8SkknRt0cAZDtbiUWxUzXunt7xrKRAsKRICGfJ9lzx9lQs
-# bl+hBSmIeJjEk5d4UqB1eV2Or3N8D27jADuUwIRLgxf+1olfaDF2sjvNFQLOfOrn
-# 1ocs59hsERhrVghNi9195wz7
+# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBTY3W7S
+# k/Mflmxl22CnmhTyvwuXiDANBgkqhkiG9w0BAQEFAASBgLkW916r2iZxL3U4eZFY
+# 1iJ3YcI+PZtF6Tyci8QziC2f0LvO1qIjHaUiDmw0neg5coKHWZ+9090T4X+RPTqr
+# KQNk4jbZy1LkKZv3/Pu792FJ73d6QmfYg9diByx9PeEWpmW8lDb9Muj13a8mGMY/
+# 6Ln9npS9w2nRea/2Yta8qJ4D
 # SIG # End signature block

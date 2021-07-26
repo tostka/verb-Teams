@@ -5,7 +5,7 @@
 .SYNOPSIS
 verb-Teams - Powershell Teams generic functions module
 .NOTES
-Version     : 1.0.10.0
+Version     : 1.0.11.0
 Author      : Todd Kadrie
 Website     :	https://www.toddomation.com
 Twitter     :	@tostka
@@ -211,7 +211,7 @@ PARAMETERS
                 } ;
             } ;
             # I want to see where I connected...
-            Add-PSTitleBar $sTitleBarTag ;
+            Add-PSTitleBar $sTitleBarTag -verbose:$($VerbosePreference -eq "Continue")  ;
             <# borked by psreadline v1/v2 breaking changes
             if(($PSFgColor = (Get-Variable  -name "$($TenOrg)Meta").value.PSFgColor) -AND ($PSBgColor = (Get-Variable  -name "$($TenOrg)Meta").value.PSBgColor)){
                 write-verbose "(setting console colors:$($TenOrg)Meta.PSFgColor:$($PSFgColor),PSBgColor:$($PSBgColor))" ; 
