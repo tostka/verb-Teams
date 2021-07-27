@@ -17,6 +17,7 @@ Function Reconnect-Teams {
     Github      : https://github.com/tostka
     Tags        : Powershell
     REVISIONS   :
+    * 2:44 PM 7/27/2021 added verbose call support
     * 12:34 PM 5/27/2020 updated cbh, added alias:rtms
     * 1:07 PM 11/25/2019 added *tol/*tor/*cmw alias variants for connect & reconnect
     # 8:28 PM 11/20/2019 updated for cred & mfa
@@ -39,18 +40,19 @@ Function Reconnect-Teams {
     [CmdletBinding()]
     [Alias('rTms')]
     Param(
-      [Parameter(HelpMessage="Credential to use for this connection [-credential [credential obj variable]")][System.Management.Automation.PSCredential]$Credential = $global:credo365TORSID,
+      [Parameter(HelpMessage="Credential to use for this connection [-credential [credential obj variable]")]
+      [System.Management.Automation.PSCredential]$Credential = $global:credo365TORSID,
       [Parameter(HelpMessage="Debugging Flag [-showDebug]")]
       [switch] $showDebug
     ) ;
-
+    $verbose = $($VerbosePreference -eq "Continue") ; 
     #if ($TeamsSession.state -eq 'Broken' -or !$TeamsSession) {Disconnect-Teams; Start-Sleep -Seconds 3; Connect-Teams} ;
     # 1:24 PM 11/7/2018 switch the test to $EOLSession.state -ne 'Opened' -AND $EOLSession.Availability -ne 'Available'
     #if (($TeamsSession.state -ne 'Opened' -AND $TeamsSession.Availability -ne 'Available') -or !$TeamsSession) {Disconnect-Teams; Disconnect-PssBroken ;Start-Sleep -Seconds 3; Connect-Teams} ;
       if(!$Credential){
           Connect-Teams ;
       } else {
-          Connect-Teams -credential:$($Credential) -showdebug:$($showdebug) ;
+          Connect-Teams -credential:$($Credential) -showdebug:$($showdebug) -verbose:$($VerbosePreference -eq "Continue") ;
       } ;
 }
 

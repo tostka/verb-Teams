@@ -5,7 +5,7 @@
 .SYNOPSIS
 verb-Teams - Powershell Teams generic functions module
 .NOTES
-Version     : 1.0.11.0
+Version     : 1.0.12.0
 Author      : Todd Kadrie
 Website     :	https://www.toddomation.com
 Twitter     :	@tostka
@@ -62,6 +62,15 @@ Function Connect-Teams {
     Github      : https://github.com/tostka
     Tags        : Powershell,Teams
     REVISIONS   :
+    * 4:41 PM 7/27/2021 updates around pstitlebar & retire of sep SOL module - looks like the get-csTenant cmd would be good status check, but I'm getting errors on all -cs commands
+    get-cstenant
+Exception calling "GetSteppablePipeline" with "1" argument(s): "Cannot process argument because the value of argument "commandInfo" is null. Change the value 
+of argument "commandInfo" to a non-null value."
+At C:\Users\kadritss\Documents\WindowsPowerShell\Modules\MicrosoftTeams\2.3.1\net472\SfBORemotePowershellModule.psm1:15273 char:13
++             $steppablePipeline = $scriptCmd.GetSteppablePipeline($myI ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : CmdletInvocationException
     * 10:40 AM 4/8/2021 added -ea 0 to the gcm cmd testing for existing conn
     * 2:44 PM 3/2/2021 added console TenOrg color support
     * 7:13 AM 7/22/2020 replaced codeblock w get-TenantTag()
@@ -74,6 +83,18 @@ Function Connect-Teams {
     # 1:31 PM 7/9/2018 added suffix hint: if($CommandPrefix){ '(Connected to Teams: Cmds prefixed [verb]-cc[Noun])' ; } ;
     # 12:25 PM 6/20/2018 port from cxo:     Primary diff from EXO connect is the "-ConnectionUri https://ps.compliance.protection.outlook.com/powershell-liveid/" all else is the same, repurpose connect-EXO to this
     .DESCRIPTION
+
+    ```powershell
+    Connect to MicrosoftTeams using Accesstokens
+    This example demonstrates how to sign in using AccessTokens. Admin can reterive Access Tokens. It requires two tokens, MS Graph Access Token and Teams Resource token.
+    PowerShell
+    $graphtoken = #Get MSGraph Token for following for resource  "https://graph.microsoft.com" and scopes "AppCatalog.ReadWrite.All", "Group.ReadWrite.All", "User.Read.All";
+    $teamstoken = #Get Teams resource token for resource id "48ac35b8-9aa8-4d74-927d-1f4a14a0b239" and scope "user_impersonation";
+    Connect-MicrosoftTeams -AccessTokens @($graphtoken, $teamstoken) -AccountId $adminaccount
+    Account                 Environment 	Tenant                                TenantId
+    -------                 -----------  ------------------------------------  ------------------------------------
+    user@contoso.com        AzureCloud   xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx  xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+    ```
     .PARAMETER  ProxyEnabled
     Use Proxy-Aware SessionOption settings [-ProxyEnabled]
     .PARAMETER  CommandPrefix
@@ -147,15 +168,13 @@ PARAMETERS
     # shift to pulling the $MFA auto by splitting the credential and checking the o365_*_OPDomain & o365_$($credVariTag)_MFA global varis
     $MFA = get-TenantMFARequirement -Credential $Credential ;
     
-    $sTitleBarTag="Teams" ;
-    $TentantTag=get-TenantTag -Credential $Credential ; 
-    if($TentantTag -ne 'TOR'){
-        # explicitly leave this tenant (default) untagged
-        $sTitleBarTag += $TentantTag ;
-    } ; 
+    $sTitleBarTag=@("TMS") ;
+    $TentantTag= $TenOrg =get-TenantTag -Credential $Credential ; 
+    $sTitleBarTag += $TentantTag ;
     
     $tenantID=$null ; 
     $credDom = ($Credential.username.split("@"))[1] ;
+    <#
     $Metas=(gv *meta|?{$_.name -match '^\w{3}Meta$'}) ; 
     foreach ($Meta in $Metas){
         if( ($credDom -eq $Meta.value.o365_TenantDomain) -OR ($credDom -eq $Meta.value.o365_OPDomain)){
@@ -163,7 +182,10 @@ PARAMETERS
             break ; 
         } ; 
     } ; 
-       
+    #> 
+    # flip to dedicated function 
+    $TenantID = get-TenantID -Credential $Credential ;
+
      <# non-MFA code - appears to be redundant to below
     if(!(get-command -Name get-TeamHelp)){
         Try { Get-Module MicrosoftTeams -ListAvailable -ErrorAction Stop | out-null } Catch {
@@ -264,7 +286,7 @@ Function Disconnect-Teams {
     Website:	https://www.toddomation.com
     Twitter:	https://twitter.com/tostka
     REVISIONS   :
-    # 1:18 PM 11/7/2018 added Disconnect-PssBroken
+    * 2:34 PM 7/27/2021 disconnect-microsoftteams is now a supported cmdlet
     # 12:42 PM 6/20/2018 ported over from disconnect-exo
     .DESCRIPTION
     I use this to smoothly cleanup connections.
@@ -286,7 +308,67 @@ Function Disconnect-Teams {
     Disconnect-PssBroken ;
     Remove-PSTitlebar 'Teams' ;
     #>
-    write-host -foregroundcolor green "(teams doesn't support a disconnect command)" ;
+    #write-host -foregroundcolor green "(teams doesn't support a disconnect command)" ;
+    # 12:45 PM 7/27/2021 it's listed now: https://docs.microsoft.com/en-us/powershell/module/teams/disconnect-microsoftteams?view=teams-ps
+    [CmdletBinding()]
+    [Alias('dtms')]
+    Param() 
+    $verbose = ($VerbosePreference -eq "Continue") ; 
+
+    if(!(get-command -Name get-TeamHelp -ea 0)){
+        Try { Get-Module MicrosoftTeams -ListAvailable -ErrorAction Stop | out-null } Catch {
+            if(get-module PowerShellGet){ Install-Module MicrosoftTeams -scope CurrentUser }
+            else { throw "REQUIRES WIN10, PSV5+ OR installed PowerShellGet module" } ;
+        } ;
+        Try {Get-Module MicrosoftTeams -ErrorAction Stop | out-null } Catch {Import-Module -Name MicrosoftTeams -ErrorAction Stop  } ;
+        #if(!$MFA){ $Teamssplat.Add("Credential",$Credential) }
+        #else { $Teamssplat.Add("AccountId",$Credential.username) }
+        #write-verbose "(using cred:$($credential.username))" ; 
+    } else { 
+        #write-host -foregroundcolor yellow "(Teams already connected)" 
+    } ;
+
+     if(get-command Disconnect-MicrosoftTeams){
+        $sTitleBarTag = @("TMS") ;
+        $error.clear() ;
+        try{
+            #Disconnect-AzureAD -EA SilentlyContinue -ErrorVariable AADError ;
+            Disconnect-MicrosoftTeams -EA SilentlyContinue -ErrorVariable TMSError  -verbose:$($verbose) ;
+            Write-Host -ForegroundColor green ("MicrosoftTeams - Disconnected") ;
+            remove-PSTitleBar $sTitleBarTag -verbose:$($VerbosePreference -eq "Continue");
+            # drop the current tag being removed from the rgx...
+            [regex]$rgxsvcs = ('(' + (((Get-Variable  -name "TorMeta").value.OrgSvcs |?{$_ -ne 'AAD'} |%{[regex]::escape($_)}) -join '|') + ')') ;
+            if($host.ui.RawUI.WindowTitle -notmatch $rgxsvcs){
+                write-verbose "(removing TenOrg reference from PSTitlebar)" ; 
+                # in this case as we need to remove all Orgs, have to build a full list from $xxxmeta
+                #Remove-PSTitlebar $TenOrg ;
+                # if don't have TenOrg known, full remove:
+                # split the rgx into an array of tags
+                # no remove all meta tenorg tags , if no other services(??)
+                $Metas=(get-variable *meta|?{$_.name -match '^\w{3}Meta$'}) ; 
+                $sTitleBarTag = @($metas.name.substring(0,3)) ; 
+                $sTitleBarTag += 'TMS' ; 
+                Remove-PSTitlebar $sTitleBarTag ;
+            } else {
+                write-verbose "(detected matching OrgSvcs in PSTitlebar: *not* removing TenOrg reference)" ; 
+            } ; 
+        }
+        catch  {
+            $ErrTrpd = $Error[0] ; 
+            if($TMSError.Exception.Message -eq "Object reference not set to an instance of an object."){
+                Write-Host -foregroundcolor yellow "Azure AD - No active Azure Active Directory Connections" ;
+            }else{
+                Write-Host -foregroundcolor "MicrosoftTeams - $($ErrTrpd.Exception.Message)" ;
+                $error.clear() ;
+                Write-Warning "$(get-date -format 'HH:mm:ss'): Failed processing $($ErrTrpd.Exception.ItemName). `nError Message: $($ErrTrpd.Exception.Message)`nError Details: $($ErrTrpd)" ;
+                $smsg = "FULL ERROR TRAPPED (EXPLICIT CATCH BLOCK WOULD LOOK LIKE): } catch[$($Error[0].Exception.GetType().FullName)]{" ; 
+                if ($logging) { Write-Log -LogContent $smsg -Path $logfile -useHost -Level ERROR } #Error|Warn|Debug 
+                else{ write-host -foregroundcolor green "$((get-date).ToString('HH:mm:ss')):$($smsg)" } ;
+            } ; 
+        
+        } ;
+
+    } else {write-host "(The MicrosoftTeams module isn't currently loaded)" } ;
 }
 
 #*------^ Disconnect-Teams.ps1 ^------
@@ -310,6 +392,7 @@ Function Reconnect-Teams {
     Github      : https://github.com/tostka
     Tags        : Powershell
     REVISIONS   :
+    * 2:44 PM 7/27/2021 added verbose call support
     * 12:34 PM 5/27/2020 updated cbh, added alias:rtms
     * 1:07 PM 11/25/2019 added *tol/*tor/*cmw alias variants for connect & reconnect
     # 8:28 PM 11/20/2019 updated for cred & mfa
@@ -332,18 +415,19 @@ Function Reconnect-Teams {
     [CmdletBinding()]
     [Alias('rTms')]
     Param(
-      [Parameter(HelpMessage="Credential to use for this connection [-credential [credential obj variable]")][System.Management.Automation.PSCredential]$Credential = $global:credo365TORSID,
+      [Parameter(HelpMessage="Credential to use for this connection [-credential [credential obj variable]")]
+      [System.Management.Automation.PSCredential]$Credential = $global:credo365TORSID,
       [Parameter(HelpMessage="Debugging Flag [-showDebug]")]
       [switch] $showDebug
     ) ;
-
+    $verbose = $($VerbosePreference -eq "Continue") ; 
     #if ($TeamsSession.state -eq 'Broken' -or !$TeamsSession) {Disconnect-Teams; Start-Sleep -Seconds 3; Connect-Teams} ;
     # 1:24 PM 11/7/2018 switch the test to $EOLSession.state -ne 'Opened' -AND $EOLSession.Availability -ne 'Available'
     #if (($TeamsSession.state -ne 'Opened' -AND $TeamsSession.Availability -ne 'Available') -or !$TeamsSession) {Disconnect-Teams; Disconnect-PssBroken ;Start-Sleep -Seconds 3; Connect-Teams} ;
       if(!$Credential){
           Connect-Teams ;
       } else {
-          Connect-Teams -credential:$($Credential) -showdebug:$($showdebug) ;
+          Connect-Teams -credential:$($Credential) -showdebug:$($showdebug) -verbose:$($VerbosePreference -eq "Continue") ;
       } ;
 }
 
