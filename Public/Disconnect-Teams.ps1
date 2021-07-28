@@ -8,7 +8,7 @@ Function Disconnect-Teams {
     Website:	https://www.toddomation.com
     Twitter:	https://twitter.com/tostka
     REVISIONS   :
-    * 2:34 PM 7/27/2021 disconnect-microsoftteams is now a supported cmdlet
+    # 1:18 PM 11/7/2018 added Disconnect-PssBroken
     # 12:42 PM 6/20/2018 ported over from disconnect-exo
     .DESCRIPTION
     I use this to smoothly cleanup connections.
@@ -59,7 +59,7 @@ Function Disconnect-Teams {
             Write-Host -ForegroundColor green ("MicrosoftTeams - Disconnected") ;
             remove-PSTitleBar $sTitleBarTag -verbose:$($VerbosePreference -eq "Continue");
             # drop the current tag being removed from the rgx...
-            [regex]$rgxsvcs = ('(' + (((Get-Variable  -name "TorMeta").value.OrgSvcs |?{$_ -ne 'AAD'} |%{[regex]::escape($_)}) -join '|') + ')') ;
+            [regex]$rgxsvcs = ('^(' + (((Get-Variable  -name "TorMeta").value.OrgSvcs |?{$_ -ne 'AAD'} |%{[regex]::escape($_)}) -join '|') + ')$') ;
             if($host.ui.RawUI.WindowTitle -notmatch $rgxsvcs){
                 write-verbose "(removing TenOrg reference from PSTitlebar)" ; 
                 # in this case as we need to remove all Orgs, have to build a full list from $xxxmeta
