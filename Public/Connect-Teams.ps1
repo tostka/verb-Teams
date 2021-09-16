@@ -21,7 +21,7 @@ Function Connect-Teams {
     get-cstenant
 Exception calling "GetSteppablePipeline" with "1" argument(s): "Cannot process argument because the value of argument "commandInfo" is null. Change the value 
 of argument "commandInfo" to a non-null value."
-At C:\Users\kadritss\Documents\WindowsPowerShell\Modules\MicrosoftTeams\2.3.1\net472\SfBORemotePowershellModule.psm1:15273 char:13
+At $($env:userprofile)\Documents\WindowsPowerShell\Modules\MicrosoftTeams\2.3.1\net472\SfBORemotePowershellModule.psm1:15273 char:13
 +             $steppablePipeline = $scriptCmd.GetSteppablePipeline($myI ...
 +             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (:) [], ParentContainsErrorRecordException
