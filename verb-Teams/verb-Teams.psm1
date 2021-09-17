@@ -5,7 +5,7 @@
 .SYNOPSIS
 verb-Teams - Powershell Teams generic functions module
 .NOTES
-Version     : 1.0.13.0
+Version     : 1.0.14.0
 Author      : Todd Kadrie
 Website     :	https://www.toddomation.com
 Twitter     :	@tostka
@@ -66,7 +66,7 @@ Function Connect-Teams {
     get-cstenant
 Exception calling "GetSteppablePipeline" with "1" argument(s): "Cannot process argument because the value of argument "commandInfo" is null. Change the value 
 of argument "commandInfo" to a non-null value."
-At C:\Users\kadritss\Documents\WindowsPowerShell\Modules\MicrosoftTeams\2.3.1\net472\SfBORemotePowershellModule.psm1:15273 char:13
+At $($env:userprofile)\Documents\WindowsPowerShell\Modules\MicrosoftTeams\2.3.1\net472\SfBORemotePowershellModule.psm1:15273 char:13
 +             $steppablePipeline = $scriptCmd.GetSteppablePipeline($myI ...
 +             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (:) [], ParentContainsErrorRecordException
@@ -286,7 +286,7 @@ Function Disconnect-Teams {
     Website:	https://www.toddomation.com
     Twitter:	https://twitter.com/tostka
     REVISIONS   :
-    * 2:34 PM 7/27/2021 disconnect-microsoftteams is now a supported cmdlet
+    # 1:18 PM 11/7/2018 added Disconnect-PssBroken
     # 12:42 PM 6/20/2018 ported over from disconnect-exo
     .DESCRIPTION
     I use this to smoothly cleanup connections.
@@ -337,7 +337,7 @@ Function Disconnect-Teams {
             Write-Host -ForegroundColor green ("MicrosoftTeams - Disconnected") ;
             remove-PSTitleBar $sTitleBarTag -verbose:$($VerbosePreference -eq "Continue");
             # drop the current tag being removed from the rgx...
-            [regex]$rgxsvcs = ('(' + (((Get-Variable  -name "TorMeta").value.OrgSvcs |?{$_ -ne 'AAD'} |%{[regex]::escape($_)}) -join '|') + ')') ;
+            [regex]$rgxsvcs = ('^(' + (((Get-Variable  -name "TorMeta").value.OrgSvcs |?{$_ -ne 'AAD'} |%{[regex]::escape($_)}) -join '|') + ')$') ;
             if($host.ui.RawUI.WindowTitle -notmatch $rgxsvcs){
                 write-verbose "(removing TenOrg reference from PSTitlebar)" ; 
                 # in this case as we need to remove all Orgs, have to build a full list from $xxxmeta
@@ -461,8 +461,8 @@ Export-ModuleMember -Function Connect-Teams,cTmscmw,cTmstol,cTmstor,cTmsVEN,Disc
 # SIG # Begin signature block
 # MIIELgYJKoZIhvcNAQcCoIIEHzCCBBsCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUIviaae0SBtcWu6cZPR60+Ssk
-# njqgggI4MIICNDCCAaGgAwIBAgIQWsnStFUuSIVNR8uhNSlE6TAJBgUrDgMCHQUA
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUyMPZbPYzFaMFjAiE3iJvKRQB
+# PpSgggI4MIICNDCCAaGgAwIBAgIQWsnStFUuSIVNR8uhNSlE6TAJBgUrDgMCHQUA
 # MCwxKjAoBgNVBAMTIVBvd2VyU2hlbGwgTG9jYWwgQ2VydGlmaWNhdGUgUm9vdDAe
 # Fw0xNDEyMjkxNzA3MzNaFw0zOTEyMzEyMzU5NTlaMBUxEzARBgNVBAMTClRvZGRT
 # ZWxmSUkwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBALqRVt7uNweTkZZ+16QG
@@ -477,9 +477,9 @@ Export-ModuleMember -Function Connect-Teams,cTmscmw,cTmstol,cTmstor,cTmsVEN,Disc
 # AWAwggFcAgEBMEAwLDEqMCgGA1UEAxMhUG93ZXJTaGVsbCBMb2NhbCBDZXJ0aWZp
 # Y2F0ZSBSb290AhBaydK0VS5IhU1Hy6E1KUTpMAkGBSsOAwIaBQCgeDAYBgorBgEE
 # AYI3AgEMMQowCKACgAChAoAAMBkGCSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwG
-# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBQiCGeZ
-# 3Z3ue2yGV3DIU0l6+9+B/zANBgkqhkiG9w0BAQEFAASBgKP/MagOOcSEY+rTOIDs
-# Vg+pIFdyoJE37DMLD6oGBvOjjJ8pUeaF8Pjx1OYC6/qq+llPmJnLcazYidF5UQK5
-# IdaR9uaeo/F82H4ECavPDa1kWlftrpkSgwTArxcvUngHwkcqXrYYjfJGTyhR8YIQ
-# qnqqUk1kYodNsOx6wEsZ+Eku
+# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBS3NEfh
+# x6nxg99hDpS30kuwZCSiEDANBgkqhkiG9w0BAQEFAASBgJbtpwoLvlKLW/A3f4qO
+# 7IESjBFAPQM6JNxkkUAXpWPqMPREwB07eQ6iY5qjAwTL840WsPADZUmXK/6g7DHN
+# iw3s1k0MsFgp6gOcQcseQ66bYR5kXoVJmWZ6hLnB9QzJfuYhh6T86/oEtDcTulhz
+# uykKT+Q2u0dFf4P3sEnm8ioR
 # SIG # End signature block
