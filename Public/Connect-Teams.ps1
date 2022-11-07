@@ -1,4 +1,4 @@
-#*------v Connect-Teams.ps1 v------
+﻿#*------v Connect-Teams.ps1 v------
 Function Connect-Teams {
     <#
     .SYNOPSIS

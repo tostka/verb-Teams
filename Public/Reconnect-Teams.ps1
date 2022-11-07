@@ -1,4 +1,4 @@
-#*------v Reconnect-Teams.ps1 v------
+﻿#*------v Reconnect-Teams.ps1 v------
 Function Reconnect-Teams {
     <#
     .SYNOPSIS

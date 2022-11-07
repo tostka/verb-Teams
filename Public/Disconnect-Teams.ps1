@@ -1,4 +1,4 @@
-#*------v Disconnect-Teams.ps1 v------
+﻿#*------v Disconnect-Teams.ps1 v------
 Function Disconnect-Teams {
     <#
     .SYNOPSIS
