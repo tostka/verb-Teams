@@ -5,7 +5,7 @@
 .SYNOPSIS
 verb-Teams - Powershell Teams generic functions module
 .NOTES
-Version     : 1.0.17.0
+Version     : 1.0.15.0
 Author      : Todd Kadrie
 Website     :	https://www.toddomation.com
 Twitter     :	@tostka
@@ -36,12 +36,10 @@ https://github.com/tostka/verb-Teams
 #>
 
 
-    $script:ModuleRoot = $PSScriptRoot ;
-    $script:ModuleVersion = (Import-PowerShellDataFile -Path (get-childitem $script:moduleroot\*.psd1).fullname).moduleversion ;
-    $runningInVsCode = $env:TERM_PROGRAM -eq 'vscode' ;
+$script:ModuleRoot = $PSScriptRoot ;
+$script:ModuleVersion = (Import-PowerShellDataFile -Path (get-childitem $script:moduleroot\*.psd1).fullname).moduleversion ;
 
 #*======v FUNCTIONS v======
-
 
 
 
@@ -258,30 +256,25 @@ PARAMETERS
 
 #*------^ Connect-Teams.ps1 ^------
 
-
 #*------v cTmscmw.ps1 v------
 function cTmscmw {Connect-Teams -cred $credO365CMWCSID}
 
 #*------^ cTmscmw.ps1 ^------
-
 
 #*------v cTmstol.ps1 v------
 function cTmstol {Connect-Teams -cred $credO365TOLSID}
 
 #*------^ cTmstol.ps1 ^------
 
-
 #*------v cTmstor.ps1 v------
 function cTmstor {Connect-Teams -cred $credO365TORSID}
 
 #*------^ cTmstor.ps1 ^------
 
-
 #*------v cTmsVEN.ps1 v------
 function cTmsVEN {Connect-Teams -cred $credO365VENCSID}
 
 #*------^ cTmsVEN.ps1 ^------
-
 
 #*------v Disconnect-Teams.ps1 v------
 Function Disconnect-Teams {
@@ -380,7 +373,6 @@ Function Disconnect-Teams {
 
 #*------^ Disconnect-Teams.ps1 ^------
 
-
 #*------v Reconnect-Teams.ps1 v------
 Function Reconnect-Teams {
     <#
@@ -441,43 +433,36 @@ Function Reconnect-Teams {
 
 #*------^ Reconnect-Teams.ps1 ^------
 
-
 #*------v rTmscmw.ps1 v------
 function rTmscmw {Reconnect-Teams -cred $credO365CMWCSID}
 
 #*------^ rTmscmw.ps1 ^------
-
 
 #*------v rTmstol.ps1 v------
 function rTmstol {Reconnect-Teams -cred $credO365TOLSID}
 
 #*------^ rTmstol.ps1 ^------
 
-
 #*------v rTmstor.ps1 v------
 function rTmstor {Reconnect-Teams -cred $credO365TORSID}
 
 #*------^ rTmstor.ps1 ^------
-
 
 #*------v rTmsVEN.ps1 v------
 function rTmsVEN {Reconnect-Teams -cred $credO365VENCSID}
 
 #*------^ rTmsVEN.ps1 ^------
 
-
 #*======^ END FUNCTIONS ^======
 
 Export-ModuleMember -Function Connect-Teams,cTmscmw,cTmstol,cTmstor,cTmsVEN,Disconnect-Teams,Reconnect-Teams,rTmscmw,rTmstol,rTmstor,rTmsVEN -Alias *
 
 
-
-
 # SIG # Begin signature block
 # MIIELgYJKoZIhvcNAQcCoIIEHzCCBBsCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUGlrJPccXJjytOUgiaXQCVWvJ
-# ArKgggI4MIICNDCCAaGgAwIBAgIQWsnStFUuSIVNR8uhNSlE6TAJBgUrDgMCHQUA
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUydjjMwXqrjotwNgCNMoSL6dV
+# 1jigggI4MIICNDCCAaGgAwIBAgIQWsnStFUuSIVNR8uhNSlE6TAJBgUrDgMCHQUA
 # MCwxKjAoBgNVBAMTIVBvd2VyU2hlbGwgTG9jYWwgQ2VydGlmaWNhdGUgUm9vdDAe
 # Fw0xNDEyMjkxNzA3MzNaFw0zOTEyMzEyMzU5NTlaMBUxEzARBgNVBAMTClRvZGRT
 # ZWxmSUkwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBALqRVt7uNweTkZZ+16QG
@@ -492,9 +477,9 @@ Export-ModuleMember -Function Connect-Teams,cTmscmw,cTmstol,cTmstor,cTmsVEN,Disc
 # AWAwggFcAgEBMEAwLDEqMCgGA1UEAxMhUG93ZXJTaGVsbCBMb2NhbCBDZXJ0aWZp
 # Y2F0ZSBSb290AhBaydK0VS5IhU1Hy6E1KUTpMAkGBSsOAwIaBQCgeDAYBgorBgEE
 # AYI3AgEMMQowCKACgAChAoAAMBkGCSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwG
-# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBQHqfGV
-# CMgO53IEw6+vLeXrIHCktTANBgkqhkiG9w0BAQEFAASBgKySCPnx2OC5PIgPnWFp
-# TNasOJQ1FKBA0uMkDNsSz5uVozk8ZipzOzsSxhRV12npXGrxliwOSHOiJfjpwpFg
-# +n108quwa28AncDQUrrWFliORIVqo7mEyAxDB8GX9ycq3gqX9MdclhjTJ52YAGR9
-# 8qo2Eu7/PJIN4p7m0jH0pCxb
+# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBTNb7Cc
+# jGKJyuOMmtSpilUHgOXh1TANBgkqhkiG9w0BAQEFAASBgF2XCQ0xuSI0vKy3q0rZ
+# zdpxs5zaSVmioBa6UpT1fnwAgLQmg8HzhCpEmsUkQ3wPSV0euokWDd+MWVPgz8V6
+# fpfwpPqXj2iuSEzmXqTaz1bNLM53WAvxHYBft2eZ/QuEdTosM6l41+xzbWOMo4FL
+# hn0yPGB3m3JW3t8sRZlvFjCr
 # SIG # End signature block

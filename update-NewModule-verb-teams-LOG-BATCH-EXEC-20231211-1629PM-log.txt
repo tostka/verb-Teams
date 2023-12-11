@@ -1,0 +1,609 @@
+﻿2023-12-11 16:29:24 INFO:  : #*======v VERB-dev.psm1:verb-teams v======
+2023-12-11 16:29:24 VERBOSE:  : $modRoot is blank, assigning from mandetory param:$ModDirPath
+2023-12-11 16:29:26 INFO:  : Run: reset-ModulePublishingDirectory -ModuleName verb-teams
+2023-12-11 16:29:26 ##  : 
+#*------v PROCESSING : verb-teams v------
+2023-12-11 16:29:26 INFO:  : Pre-purge (CHANGELOG|README)\.md$ Root dir matches from :
+2023-12-11 16:29:27 INFO:  : verb-teams resolved $ModPubPath:C:\sc\verb-teams\verb-teams\
+$ModResPath:C:\sc\verb-teams\Resource\
+2023-12-11 16:29:27 VERBOSE:  : Reset module Resource files (purge from C:\sc\verb-teams\verb-teams\)
+2023-12-11 16:29:27 INFO:  : verb-teams resolved $ModPubPath:C:\sc\verb-teams\verb-teams\
+$ModResPath:C:\sc\verb-teams\Licenses\
+2023-12-11 16:29:27 VERBOSE:  : Reset module Licenses files (purge from C:\sc\verb-teams\verb-teams\)
+2023-12-11 16:29:27 INFO:  : verb-teams resolved $ModPubPath:C:\sc\verb-teams\verb-teams\
+$ModResPath:C:\sc\verb-teams\Docs\
+2023-12-11 16:29:28 VERBOSE:  : Reset module Docs files (purge from C:\sc\verb-teams\verb-teams\)
+2023-12-11 16:29:28 INFO:  : ==C:\sc\verb-teams\CHANGELOG.md:
+2023-12-11 16:29:28 INFO:  : ==C:\sc\verb-teams\README.md:
+2023-12-11 16:29:29 INFO:  : ==C:\sc\verb-teams\Docs\Quick-Start-Installation-and-Example.md:
+2023-12-11 16:29:29 ##  : 
+#*------^ PROCESSING : verb-teams ^------
+2023-12-11 16:29:29 INFO:  : Run: populate-ModulePublishingDirectory -ModuleName verb-teams
+2023-12-11 16:29:29 ##  : 
+#*------v PROCESSING : verb-teams v------
+2023-12-11 16:29:29 INFO:  : Locating (CHANGELOG|README)\.md$ Root dir matches from :
+2023-12-11 16:29:30 INFO:  : verb-teams resolved $ModPubPath:C:\sc\verb-teams\verb-teams\
+$ModResPath:C:\sc\verb-teams\Resource\
+2023-12-11 16:29:30 VERBOSE:  : Recopy module Resource files (copy from C:\sc\verb-teams\verb-teams\)
+2023-12-11 16:29:30 INFO:  : verb-teams resolved $ModPubPath:C:\sc\verb-teams\verb-teams\
+$ModResPath:C:\sc\verb-teams\Licenses\
+2023-12-11 16:29:30 VERBOSE:  : Recopy module Licenses files (copy from C:\sc\verb-teams\verb-teams\)
+2023-12-11 16:29:30 INFO:  : verb-teams resolved $ModPubPath:C:\sc\verb-teams\verb-teams\
+$ModResPath:C:\sc\verb-teams\Docs\
+2023-12-11 16:29:30 VERBOSE:  : Recopy module Docs files (copy from C:\sc\verb-teams\verb-teams\)
+2023-12-11 16:29:31 INFO:  : copy-item w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+path                           {C:\sc\verb-teams\CHANGELOG.md, C:\sc\verb-teams\README.md, C:\sc\verb-teams\Docs\Quick-Start-Installation-and-Example.md}                                                                                             
+destination                    C:\sc\verb-teams\verb-teams\                                                                                                                                                                                           
+force                          True                                                                                                                                                                                                                   
+erroraction                    STOP                                                                                                                                                                                                                   
+verbose                        True                                                                                                                                                                                                                   
+whatif                         False
+--$pltCI.path:
+C:\sc\verb-teams\CHANGELOG.md
+C:\sc\verb-teams\README.md
+C:\sc\verb-teams\Docs\Quick-Start-Installation-and-Example.md
+2023-12-11 16:29:31 ##  : 
+#*------^ PROCESSING : verb-teams ^------
+2023-12-11 16:29:31 INFO:  : Validate updated verb-teams\verb-teams dir contents against Manifest:
+Run: test-modulemanifest -Path C:\sc\verb-teams\verb-teams\verb-teams.psd1
+2023-12-11 16:29:31 VERBOSE:  : (no $ttmm_Err: test-ModuleManifest had no errors)
+2023-12-11 16:29:31 INFO:  : NON-Republish pass detected:
+MERGE parm specified as well:`n-Merge Public|Internal|Classes include subdirs module content into updated .psm1
+-Sign updated files.
+-Uninstall/Remove existing profile module
+-Copy new module to profile
+-Confirm: Get-Module -ListAvailable
+-Check/Update existing Psd1 Version
+-Publish-Module
+-Remove existing installed profile module
+-Test Install-Module
+-Test Import-Module
+2023-12-11 16:29:31 INFO:  : -Merge specified...
+2023-12-11 16:29:31 INFO:  : ConvertTo-ModuleMergedTDO w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+ModuleName                     verb-teams                                                                                                                                                                                                             
+ModuleSourcePath               {c:\sc\verb-teams\Public, c:\sc\verb-teams\Internal}                                                                                                                                                                   
+ModuleDestinationPath          c:\sc\verb-teams\verb-teams                                                                                                                                                                                            
+RequiredVersion                1.0.17                                                                                                                                                                                                                 
+LogSpec                        {logging, logfile, transcript}                                                                                                                                                                                         
+NoAliasExport                                                                                                                                                                                                                                         
+ErrorAction                    Stop                                                                                                                                                                                                                   
+showdebug                      False                                                                                                                                                                                                                  
+whatif                         False
+2023-12-11 16:29:31 INFO:  : ConvertTo-ModuleMergedTDO w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+ModuleName                     verb-teams                                                                                                                                                                                                             
+ModuleSourcePath               {c:\sc\verb-teams\Public, c:\sc\verb-teams\Internal}                                                                                                                                                                   
+ModuleDestinationPath          c:\sc\verb-teams\verb-teams                                                                                                                                                                                            
+RequiredVersion                1.0.17                                                                                                                                                                                                                 
+LogSpec                        {logging, logfile, transcript}                                                                                                                                                                                         
+NoAliasExport                                                                                                                                                                                                                                         
+ErrorAction                    Stop                                                                                                                                                                                                                   
+showdebug                      False                                                                                                                                                                                                                  
+whatif                         False
+2023-12-11 16:29:32 INFO:  : (NON-dyn psm1 detected - purging existing non-CBH content...)
+2023-12-11 16:29:32 INFO:  : Initialize-PSModuleDirectories w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+ModuleSourcePath               {c:\sc\verb-teams\Public, c:\sc\verb-teams\Internal}                                                                                                                                                                   
+ModuleDestinationPath          c:\sc\verb-teams\verb-teams                                                                                                                                                                                            
+ErrorAction                    Stop                                                                                                                                                                                                                   
+whatif                         False
+2023-12-11 16:29:32 INFO:  : 
+#*------v (1/2):C:\sc\verb-teams\Public v------
+2023-12-11 16:29:33 INFO:  : Processing 11 $ComponentScripts files through Remove-AuthenticodeSignature...
+2023-12-11 16:29:33 INFO:  : Remove-AuthenticodeSignature w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Path                           {C:\sc\verb-teams\Public\Connect-Teams.ps1, C:\sc\verb-teams\Public\cTmscmw.ps1, C:\sc\verb-teams\Public\cTmstol.ps1, C:\sc\verb-teams\Public\cTmstor.ps1...}                                                          
+whatif                         False                                                                                                                                                                                                                  
+verbose                        True
+2023-12-11 16:29:33 INFO:  : Processing (1/11):C:\sc\verb-teams\Public\Connect-Teams.ps1...
+2023-12-11 16:29:35 INFO:  : Processing (2/11):C:\sc\verb-teams\Public\cTmscmw.ps1...
+2023-12-11 16:29:35 INFO:  : Processing (3/11):C:\sc\verb-teams\Public\cTmstol.ps1...
+2023-12-11 16:29:36 INFO:  : Processing (4/11):C:\sc\verb-teams\Public\cTmstor.ps1...
+2023-12-11 16:29:36 INFO:  : Processing (5/11):C:\sc\verb-teams\Public\cTmsVEN.ps1...
+2023-12-11 16:29:37 INFO:  : Processing (6/11):C:\sc\verb-teams\Public\Disconnect-Teams.ps1...
+2023-12-11 16:29:38 INFO:  : Processing (7/11):C:\sc\verb-teams\Public\Reconnect-Teams.ps1...
+2023-12-11 16:29:39 INFO:  : Processing (8/11):C:\sc\verb-teams\Public\rTmscmw.ps1...
+2023-12-11 16:29:39 INFO:  : Processing (9/11):C:\sc\verb-teams\Public\rTmstol.ps1...
+2023-12-11 16:29:40 INFO:  : Processing (10/11):C:\sc\verb-teams\Public\rTmstor.ps1...
+2023-12-11 16:29:40 INFO:  : Processing (11/11):C:\sc\verb-teams\Public\rTmsVEN.ps1...
+2023-12-11 16:29:41 INFO:  : 
+#*------^ (1/2):C:\sc\verb-teams\Public ^------
+2023-12-11 16:29:41 INFO:  : 
+#*------v (2/2):C:\sc\verb-teams\Internal v------
+2023-12-11 16:29:41 INFO:  : Processing 0 $ComponentScripts files through Remove-AuthenticodeSignature...
+2023-12-11 16:29:41 INFO:  : Remove-AuthenticodeSignature w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Path                                                                                                                                                                                                                                                  
+whatif                         False                                                                                                                                                                                                                  
+verbose                        True
+2023-12-11 16:29:41 INFO:  : 
+#*------^ (2/2):C:\sc\verb-teams\Internal ^------
+2023-12-11 16:29:41 INFO:  : (Updating Psm1 Export-ModuleMember -Function to reflect Public modules)
+2023-12-11 16:29:41 INFO:  : Adding:FooterBlock...
+2023-12-11 16:29:41 INFO:  : Updating the Psd1 FunctionsToExport to match
+2023-12-11 16:29:43 INFO:  : confirm-ModuleBuildSync w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+ModPsdPath                     c:\sc\verb-teams\verb-teams\verb-teams.psd1_TMP                                                                                                                                                                        
+RequiredVersion                1.0.17                                                                                                                                                                                                                 
+NoTest                         True                                                                                                                                                                                                                   
+whatif                         False                                                                                                                                                                                                                  
+verbose                        True
+2023-12-11 16:29:44 INFO:  : #*======v confirm-ModuleBuildSync:  v======
+2023-12-11 16:29:44 INFO:  : (test-path confirms $ModPsm1 & $ModTestPs1)
+2023-12-11 16:29:44 INFO:  : Import-PowerShellDataFile w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Path                           c:\sc\verb-teams\verb-teams\verb-teams.psd1_TMP                                                                                                                                                                        
+ErrorAction                    Stop                                                                                                                                                                                                                   
+verbose                        True
+2023-12-11 16:29:44 INFO:  : (resolved Module attributes:
+$ModuleName:	verb-teams
+$ModRoot:	c:\sc\verb-teams
+$ModPsd1:	c:\sc\verb-teams\verb-teams\verb-teams.psd1_TMP
+$ModPsm1:	c:\sc\verb-teams\verb-teams\verb-teams.psm1_TMP
+$ModTestPs1:	c:\sc\verb-teams\Tests\verb-teams.tests.ps1
+$psd1Vers:	1.0.16
+$psd1guid:	85b9451c-b7c5-4ca1-8589-158625ab3bc4)
+2023-12-11 16:29:45 INFO:  : confirm-ModulePsd1Version w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Path                           c:\sc\verb-teams\verb-teams\verb-teams.psd1_TMP                                                                                                                                                                        
+RequiredVersion                1.0.17                                                                                                                                                                                                                 
+whatif                         False                                                                                                                                                                                                                  
+verbose                        True
+2023-12-11 16:29:45 INFO:  : #*======v confirm-ModulePsd1Version: c:\sc\verb-teams\verb-teams\verb-teams.psd1_TMP v======
+2023-12-11 16:29:45 WARNING:  : In:c:\sc\verb-teams\verb-teams\verb-teams.psd1_TMP
+Version present:(1.0.16)
+*does not* properly match:1.0.17
+FORCING MATCHING UPDATE!
+2023-12-11 16:29:47 INFO:  : $objReport
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Version                        1.0.17                                                                                                                                                                                                                 
+Valid                          False
+2023-12-11 16:29:47 INFO:  : (SET:$objReport.Valid = $true ;)
+2023-12-11 16:29:47 INFO:  : (PIPELINE:New-Object PSObject -Property $objReport | write-output)
+$objReport
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Version                        1.0.17                                                                                                                                                                                                                 
+Valid                          True
+2023-12-11 16:29:47 INFO:  : #*======^ confirm-ModulePsd1Version: c:\sc\verb-teams\verb-teams\verb-teams.psd1_TMP ^======
+2023-12-11 16:29:47 INFO:  : (confirm-ModulePsd1Version:Success)
+2023-12-11 16:29:47 INFO:  : confirm-ModulePsm1Version w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Path                           c:\sc\verb-teams\verb-teams\verb-teams.psm1_TMP                                                                                                                                                                        
+RequiredVersion                1.0.17                                                                                                                                                                                                                 
+whatif                         False                                                                                                                                                                                                                  
+verbose                        True
+2023-12-11 16:29:48 INFO:  : #*======v confirm-ModulePsm1Version: c:\sc\verb-teams\verb-teams\verb-teams.psm1_TMP v======
+2023-12-11 16:29:48 WARNING:  : In:c:\sc\verb-teams\verb-teams\verb-teams.psm1_TMP
+Version present:(1.0.16)
+*does not* properly match:1.0.17
+FORCING MATCHING UPDATE!
+2023-12-11 16:29:50 INFO:  : $objReport
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Version                        1.0.17                                                                                                                                                                                                                 
+Valid                          False
+2023-12-11 16:29:50 INFO:  : (SET:$objReport.Valid = $true ;)
+2023-12-11 16:29:50 INFO:  : (PIPELINE:New-Object PSObject -Property $objReport | write-output)
+$objReport
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Version                        1.0.17                                                                                                                                                                                                                 
+Valid                          True
+2023-12-11 16:29:50 INFO:  : #*======^ confirm-ModulePsm1Version: c:\sc\verb-teams\verb-teams\verb-teams.psm1_TMP ^======
+2023-12-11 16:29:50 INFO:  : (confirm-ModulePsm1Version:Success)
+2023-12-11 16:29:50 INFO:  : (-NoTest: skipping confirm-ModuleTestPs1Guid)
+2023-12-11 16:29:50 INFO:  : $objReport
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Manifest                       c:\sc\verb-teams\verb-teams\verb-teams.psd1_TMP                                                                                                                                                                        
+Module                         c:\sc\verb-teams\verb-teams\verb-teams.psm1_TMP                                                                                                                                                                        
+Pester                         (SKIPPED)                                                                                                                                                                                                              
+Guid                           (SKIPPED)                                                                                                                                                                                                              
+Version                        1.0.17                                                                                                                                                                                                                 
+Valid                          False
+2023-12-11 16:29:50 INFO:  : (SET:$objReport.Valid = $true ;)
+2023-12-11 16:29:51 INFO:  : (PIPELINE:New-Object PSObject -Property $objReport | write-output)
+$objReport
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Manifest                       c:\sc\verb-teams\verb-teams\verb-teams.psd1_TMP                                                                                                                                                                        
+Module                         c:\sc\verb-teams\verb-teams\verb-teams.psm1_TMP                                                                                                                                                                        
+Pester                         (SKIPPED)                                                                                                                                                                                                              
+Guid                           (SKIPPED)                                                                                                                                                                                                              
+Version                        1.0.17                                                                                                                                                                                                                 
+Valid                          True
+2023-12-11 16:29:51 INFO:  : #*======^ confirm-ModuleBuildSync:  ^======
+2023-12-11 16:29:51 INFO:  : (confirm-ModuleBuildSync:Success)
+2023-12-11 16:29:51 INFO:  : Test-ModuleTMPFiles w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+ModuleNamePSM1Path             c:\sc\verb-teams\verb-teams\verb-teams.psm1_TMP                                                                                                                                                                        
+verbose                        True
+2023-12-11 16:29:51 INFO:  : #*======v Test-ModuleTMPFiles: c:\sc\verb-teams\verb-teams\verb-teams.psm1_TMP v======
+2023-12-11 16:29:51 INFO:  : 
+Psm1:c:\sc\verb-teams\verb-teams\verb-teams.psm1_TMP
+Psd1:c:\sc\verb-teams\verb-teams\verb-teams.psd1_TMP
+2023-12-11 16:29:51 INFO:  : Creating Testable c:\sc\verb-teams\verb-teams\071e00e6-7e67-48ec-b3bf-18bc5deae07d.psd1
+ to validate c:\sc\verb-teams\verb-teams\verb-teams.psd1_TMP will Test-ModuleManifest
+2023-12-11 16:29:51 INFO:  : Test-ModuleManifest w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+verbose                        True                                                                                                                                                                                                                   
+Path                           c:\sc\verb-teams\verb-teams\071e00e6-7e67-48ec-b3bf-18bc5deae07d.psd1                                                                                                                                                  
+ErrorVariable                  vManiErr                                                                                                                                                                                                               
+ErrorAction                    STOP
+2023-12-11 16:29:51 INFO:  : Test-ModuleManifest:PASSED
+2023-12-11 16:29:51 INFO:  : Creating Testable c:\sc\verb-teams\verb-teams\071e00e6-7e67-48ec-b3bf-18bc5deae07d.psm1
+ to validate c:\sc\verb-teams\verb-teams\verb-teams.psm1_TMP will Import-Module
+2023-12-11 16:29:51 INFO:  : n import-module w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Name                           c:\sc\verb-teams\verb-teams\071e00e6-7e67-48ec-b3bf-18bc5deae07d.psm1                                                                                                                                                  
+Force                          True                                                                                                                                                                                                                   
+verbose                        True                                                                                                                                                                                                                   
+ErrorAction                    STOP                                                                                                                                                                                                                   
+ErrorVariable                  vIpMoErr                                                                                                                                                                                                               
+PassThru                       True
+2023-12-11 16:29:52 INFO:  : Ipmo: PASSED
+2023-12-11 16:29:52 INFO:  : (remove-module -name c:\sc\verb-teams\verb-teams\071e00e6-7e67-48ec-b3bf-18bc5deae07d.psm1 -force)
+2023-12-11 16:29:52 INFO:  : (remove-item -path c:\sc\verb-teams\verb-teams\071e00e6-7e67-48ec-b3bf-18bc5deae07d.psm1 -ErrorAction SilentlyContinue ; 
+2023-12-11 16:29:52 INFO:  : (remove-item -path c:\sc\verb-teams\verb-teams\071e00e6-7e67-48ec-b3bf-18bc5deae07d.psd1 -ErrorAction SilentlyContinue ; 
+2023-12-11 16:29:52 INFO:  : $objReport
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Manifest                       071e00e6-7e67-48ec-b3bf-18bc5deae07d                                                                                                                                                                                   
+Module                         071e00e6-7e67-48ec-b3bf-18bc5deae07d                                                                                                                                                                                   
+Valid                          False
+2023-12-11 16:29:52 INFO:  : (SET:$objReport.Valid = $true ;)
+2023-12-11 16:29:52 INFO:  : (PIPELINE:New-Object PSObject -Property $objReport | write-output)
+$objReport
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Manifest                       071e00e6-7e67-48ec-b3bf-18bc5deae07d                                                                                                                                                                                   
+Module                         071e00e6-7e67-48ec-b3bf-18bc5deae07d                                                                                                                                                                                   
+Valid                          True
+2023-12-11 16:29:52 INFO:  : #*======^ Test-ModuleTMPFiles: c:\sc\verb-teams\verb-teams\verb-teams.psm1_TMP ^======
+2023-12-11 16:29:52 INFO:  : Processing error free: Overwriting temp .psm1 with temp copy
+copy-item w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Destination                    c:\sc\verb-teams\verb-teams\verb-teams.psm1                                                                                                                                                                            
+Path                           c:\sc\verb-teams\verb-teams\verb-teams.psm1_TMP                                                                                                                                                                        
+whatif                         False                                                                                                                                                                                                                  
+ErrorAction                    STOP
+2023-12-11 16:29:52 INFO:  : Processing error free: Overwriting temp .psd1 with temp copy
+copy-item w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Destination                    c:\sc\verb-teams\verb-teams\verb-teams.psd1                                                                                                                                                                            
+Path                           c:\sc\verb-teams\verb-teams\verb-teams.psd1_TMP                                                                                                                                                                        
+whatif                         False                                                                                                                                                                                                                  
+ErrorAction                    STOP
+2023-12-11 16:29:52 INFO:  : #*======^ ConvertTo-ModuleMergedTDO: ^======
+2023-12-11 16:29:52 VERBOSE:  : (no $ttmm_Err: test-ModuleManifest had no errors)
+2023-12-11 16:29:52 INFO:  : (Test-ModuleManifest:PASSED)
+2023-12-11 16:29:53 INFO:  : Checking sync of Psd1 module guid to the Pester Test Script: c:\sc\verb-teams\Tests\verb-teams.tests.ps1
+2023-12-11 16:29:53 INFO:  : confirm-ModuleBuildSync w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+ModPsdPath                     C:\sc\verb-teams\verb-teams\verb-teams.psd1                                                                                                                                                                            
+RequiredVersion                1.0.17                                                                                                                                                                                                                 
+whatif                         False                                                                                                                                                                                                                  
+verbose                        True
+2023-12-11 16:29:53 INFO:  : #*======v confirm-ModuleBuildSync:  v======
+2023-12-11 16:29:54 INFO:  : (test-path confirms $ModPsm1 & $ModTestPs1)
+2023-12-11 16:29:54 INFO:  : Import-PowerShellDataFile w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Path                           C:\sc\verb-teams\verb-teams\verb-teams.psd1                                                                                                                                                                            
+ErrorAction                    Stop                                                                                                                                                                                                                   
+verbose                        True
+2023-12-11 16:29:54 INFO:  : (resolved Module attributes:
+$ModuleName:	verb-teams
+$ModRoot:	c:\sc\verb-teams
+$ModPsd1:	C:\sc\verb-teams\verb-teams\verb-teams.psd1
+$ModPsm1:	C:\sc\verb-teams\verb-teams\verb-teams.psm1
+$ModTestPs1:	c:\sc\verb-teams\Tests\verb-teams.tests.ps1
+$psd1Vers:	1.0.17
+$psd1guid:	85b9451c-b7c5-4ca1-8589-158625ab3bc4)
+2023-12-11 16:29:54 INFO:  : confirm-ModulePsd1Version w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Path                           C:\sc\verb-teams\verb-teams\verb-teams.psd1                                                                                                                                                                            
+RequiredVersion                1.0.17                                                                                                                                                                                                                 
+whatif                         False                                                                                                                                                                                                                  
+verbose                        True
+2023-12-11 16:29:54 INFO:  : #*======v confirm-ModulePsd1Version: C:\sc\verb-teams\verb-teams\verb-teams.psd1 v======
+2023-12-11 16:29:55 INFO:  : (Version already updated to match)
+2023-12-11 16:29:55 INFO:  : $objReport
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Version                        1.0.17                                                                                                                                                                                                                 
+Valid                          False
+2023-12-11 16:29:55 INFO:  : (SET:$objReport.Valid = $true ;)
+2023-12-11 16:29:55 INFO:  : (PIPELINE:New-Object PSObject -Property $objReport | write-output)
+$objReport
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Version                        1.0.17                                                                                                                                                                                                                 
+Valid                          True
+2023-12-11 16:29:55 INFO:  : #*======^ confirm-ModulePsd1Version: C:\sc\verb-teams\verb-teams\verb-teams.psd1 ^======
+2023-12-11 16:29:55 INFO:  : (confirm-ModulePsd1Version:Success)
+2023-12-11 16:29:55 INFO:  : confirm-ModulePsm1Version w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Path                           C:\sc\verb-teams\verb-teams\verb-teams.psm1                                                                                                                                                                            
+RequiredVersion                1.0.17                                                                                                                                                                                                                 
+whatif                         False                                                                                                                                                                                                                  
+verbose                        True
+2023-12-11 16:29:55 INFO:  : #*======v confirm-ModulePsm1Version: C:\sc\verb-teams\verb-teams\verb-teams.psm1 v======
+2023-12-11 16:29:55 INFO:  : (Version already updated to match)
+2023-12-11 16:29:56 INFO:  : $objReport
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Version                        1.0.17                                                                                                                                                                                                                 
+Valid                          False
+2023-12-11 16:29:56 INFO:  : (SET:$objReport.Valid = $true ;)
+2023-12-11 16:29:56 INFO:  : (PIPELINE:New-Object PSObject -Property $objReport | write-output)
+$objReport
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Version                        1.0.17                                                                                                                                                                                                                 
+Valid                          True
+2023-12-11 16:29:56 INFO:  : #*======^ confirm-ModulePsm1Version: C:\sc\verb-teams\verb-teams\verb-teams.psm1 ^======
+2023-12-11 16:29:56 INFO:  : (confirm-ModulePsm1Version:Success)
+2023-12-11 16:29:56 INFO:  : Checking sync of Psd1 module guid to the Pester Test Script: c:\sc\verb-teams\Tests\verb-teams.tests.ps1
+2023-12-11 16:29:56 INFO:  : confirm-ModuleTestPs1Guid w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Path                           c:\sc\verb-teams\Tests\verb-teams.tests.ps1                                                                                                                                                                            
+RequiredGuid                   85b9451c-b7c5-4ca1-8589-158625ab3bc4                                                                                                                                                                                   
+whatif                         False                                                                                                                                                                                                                  
+verbose                        True
+2023-12-11 16:29:56 INFO:  : #*======v confirm-ModuleTestPs1Guid: c:\sc\verb-teams\Tests\verb-teams.tests.ps1 v======
+2023-12-11 16:29:56 INFO:  : (Guid  already updated to match)
+2023-12-11 16:29:57 INFO:  : $objReport
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Guid                           85b9451c-b7c5-4ca1-8589-158625ab3bc4                                                                                                                                                                                   
+Valid                          False
+2023-12-11 16:29:57 INFO:  : (SET:$objReport.Valid = $true ;)
+2023-12-11 16:29:57 INFO:  : (PIPELINE:New-Object PSObject -Property $objReport | write-output)
+$objReport
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Guid                           85b9451c-b7c5-4ca1-8589-158625ab3bc4                                                                                                                                                                                   
+Valid                          True
+2023-12-11 16:29:57 INFO:  : #*======^ confirm-ModuleTestPs1Guid: c:\sc\verb-teams\Tests\verb-teams.tests.ps1 ^======
+2023-12-11 16:29:57 INFO:  : (confirm-ModuleTestPs1Guid:Success)
+2023-12-11 16:29:57 INFO:  : $objReport
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Manifest                       C:\sc\verb-teams\verb-teams\verb-teams.psd1                                                                                                                                                                            
+Module                         C:\sc\verb-teams\verb-teams\verb-teams.psm1                                                                                                                                                                            
+Pester                         c:\sc\verb-teams\Tests\verb-teams.tests.ps1                                                                                                                                                                            
+Guid                           85b9451c-b7c5-4ca1-8589-158625ab3bc4                                                                                                                                                                                   
+Version                        1.0.17                                                                                                                                                                                                                 
+Valid                          False
+2023-12-11 16:29:57 INFO:  : (SET:$objReport.Valid = $true ;)
+2023-12-11 16:29:57 INFO:  : (PIPELINE:New-Object PSObject -Property $objReport | write-output)
+$objReport
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Manifest                       C:\sc\verb-teams\verb-teams\verb-teams.psd1                                                                                                                                                                            
+Module                         C:\sc\verb-teams\verb-teams\verb-teams.psm1                                                                                                                                                                            
+Pester                         c:\sc\verb-teams\Tests\verb-teams.tests.ps1                                                                                                                                                                            
+Guid                           85b9451c-b7c5-4ca1-8589-158625ab3bc4                                                                                                                                                                                   
+Version                        1.0.17                                                                                                                                                                                                                 
+Valid                          True
+2023-12-11 16:29:57 INFO:  : #*======^ confirm-ModuleBuildSync:  ^======
+2023-12-11 16:29:57 INFO:  : (confirm-ModuleBuildSync:Success)
+2023-12-11 16:29:58 VERBOSE:  : $Psd1filelist populated: xXML:c:\sc\verb-teams\Psd1filelist
+2023-12-11 16:29:58 INFO:  : Updating the Psd1 FileList to with populated $Psd1filelist...
+2023-12-11 16:29:59 INFO:  : Signing appropriate files...
+2023-12-11 16:30:00 INFO:  : Sign-file w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+file                           {C:\sc\verb-teams\rebuild-module.ps1, C:\sc\verb-teams\requirements.psd1, C:\sc\verb-teams\Tests\PPoShScriptingStyle.psd1, C:\sc\verb-teams\Tests\ToddomationScriptingStyle-medium.psd1...}                            
+ErrorAction                    Stop                                                                                                                                                                                                                   
+showdebug                      False                                                                                                                                                                                                                  
+whatif                         False
+2023-12-11 16:30:02 INFO:  : Removing existing profile verb-teams content...
+2023-12-11 16:30:02 INFO:  : Uninstall-ModuleForce w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+ModuleName                     verb-teams                                                                                                                                                                                                             
+Verbose                        True                                                                                                                                                                                                                   
+whatif                         False
+2023-12-11 16:30:21 INFO:  : 
+#*------v Uninstall PSGet Mod:verb-Teams:v1.0.15 v------
+2023-12-11 16:30:21 INFO:  : Uninstall-Script w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Force                          True                                                                                                                                                                                                                   
+Whatif                         False                                                                                                                                                                                                                  
+Verbose                        True
+2023-12-11 16:31:57 INFO:  : 
+#*------^ Uninstall PSGet Mod:verb-Teams:v1.0.15 ^------
+2023-12-11 16:31:57 INFO:  : (Processing $env:PSModulePath paths, for surviving locked copies of verb-teams to *manually* purge...)
+2023-12-11 16:31:58 INFO:  : Checking: verb-teams below: C:\Users\kadritss\Documents\WindowsPowerShell\Modules...
+2023-12-11 16:31:58 INFO:  : Checking: verb-teams below: C:\ProgramData\Boxstarter...
+2023-12-11 16:31:58 INFO:  : Checking: verb-teams below: C:\Program Files\WindowsPowerShell\Modules...
+2023-12-11 16:31:58 INFO:  : Checking: verb-teams below: C:\Windows\system32\WindowsPowerShell\v1.0\Modules...
+2023-12-11 16:31:59 INFO:  : Checking: verb-teams below: C:\Program Files\Microsoft Message Analyzer\PowerShell\...
+2023-12-11 16:31:59 INFO:  : (no $sRet returned on call)
+2023-12-11 16:31:59 INFO:  : Copying module to profile (net of .git & .vscode dirs, and backed up content)...
+2023-12-11 16:31:59 INFO:  : $srcFiles:post-filter out:
+\\(Package|Tests|logs)\\|(\.ps[dm]1_(\d+-\d+[AP]M|TMP)|-LOG-BATCH-EXEC-\d+-\d+[AP]M-log\.txt|\\(fingerprint|Psd1filelist))$
+2023-12-11 16:31:59 INFO:  : Discovered mod-copy files ($srcFiles.fullname):w
+C:\sc\verb-teams\verb-Teams\CHANGELOG.md
+C:\sc\verb-teams\verb-Teams\LICENSE.txt
+C:\sc\verb-teams\verb-Teams\Quick-Start-Installation-and-Example.md
+C:\sc\verb-teams\verb-Teams\README.md
+C:\sc\verb-teams\verb-Teams\verb-Teams.psd1
+C:\sc\verb-teams\verb-Teams\verb-Teams.psm1
+2023-12-11 16:31:59 INFO:  : Non-Pre-existing:$to:C:\Users\kadritss\Documents\WindowsPowerShell\Modules\verb-teams\verb-teams
+Pre-creating before copy...
+2023-12-11 16:31:59 INFO:  : Mode   LastWriteTime         Length Name      
+----   -------------         ------ ----      
+d----- 12/11/2023 4:31:59 PM        verb-teams
+2023-12-11 16:31:59 INFO:  : -Merge:exclude $MergeBuildExcl \\(Public|Internal|External|Private)\\.*.ps1$ files from temp build copy
+2023-12-11 16:32:00 INFO:  : Recursively remove empty subdirs below C:\Users\kadritss\Documents\WindowsPowerShell\Modules\verb-teams\verb-teams...
+2023-12-11 16:32:00 INFO:  : Move/Flatten Resource etc files into root of temp Build dir...
+2023-12-11 16:32:00 INFO:  : Unable to locate a problematic temp mod dir C:\Users\kadritss\Documents\WindowsPowerShell\Modules\verb-teams\verb-teams COPY of Quick-Start-Installation-and-Example.md
+2023-12-11 16:32:00 INFO:  : Unable to locate a problematic temp mod dir C:\Users\kadritss\Documents\WindowsPowerShell\Modules\verb-teams\verb-teams COPY of CHANGELOG.md
+2023-12-11 16:32:00 INFO:  : Unable to locate a problematic temp mod dir C:\Users\kadritss\Documents\WindowsPowerShell\Modules\verb-teams\verb-teams COPY of LICENSE.txt
+2023-12-11 16:32:00 INFO:  : Unable to locate a problematic temp mod dir C:\Users\kadritss\Documents\WindowsPowerShell\Modules\verb-teams\verb-teams COPY of README.md
+2023-12-11 16:32:00 INFO:  : copy/Flatten Resource etc files into source root c:\sc\verb-teams\verb-teams dir...
+2023-12-11 16:32:01 INFO:  : Resolved $ModPsdPath:
+C:\sc\verb-teams\verb-teams\verb-teams.psd1
+2023-12-11 16:32:01 VERBOSE:  : resolve-path the CUMods verb-teams.psd1 location
+2023-12-11 16:32:01 INFO:  : 
+==Verifying CU:Mods\verb-teams\verb-teams\Quick-Start-Installation-and-Example.md:
+2023-12-11 16:32:01 INFO:  : 
+==Verifying CU:Mods\verb-teams\verb-teams\CHANGELOG.md:
+2023-12-11 16:32:01 INFO:  : 
+==Verifying CU:Mods\verb-teams\verb-teams\LICENSE.txt:
+2023-12-11 16:32:01 INFO:  : 
+==Verifying CU:Mods\verb-teams\verb-teams\README.md:
+2023-12-11 16:32:01 INFO:  : Running pre-Publish-Module .psd1 test:
+Test-ModuleManifest -path C:\sc\verb-teams\verb-teams\verb-teams.psd1
+2023-12-11 16:32:01 VERBOSE:  : (no $ttmm_Err: test-ModuleManifest had no errors)
+2023-12-11 16:32:01 INFO:  : (Test-ModuleManifest:PASSED)
+2023-12-11 16:32:01 INFO:  : (Profiling Repo: get-PSRepository -name lyncRepo...)
+2023-12-11 16:32:03 VERBOSE:  : (confirmed:$tRepo.PublishLocation accessible)
+2023-12-11 16:32:03 INFO:  : 
+Publish-Module w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Name                           verb-teams                                                                                                                                                                                                             
+Repository                     lyncRepo                                                                                                                                                                                                               
+RequiredVersion                1.0.17                                                                                                                                                                                                                 
+Verbose                        True                                                                                                                                                                                                                   
+ErrorAction                    Stop                                                                                                                                                                                                                   
+errorVariable                  pbmo_Err                                                                                                                                                                                                               
+whatif                         False
+2023-12-11 16:32:53 WARNING:  :  FOUND $pbmo_Err: import-module HAD ERRORS! (no action, could be non-impacting)
+2023-12-11 16:32:54 WARNING:  :  Publish-Module PBMO UNDEFINED ERROR! System.Management.Automation.StopUpstreamCommandsException: System error.     at Microsoft.PowerShell.Commands.SelectObjectCommand.ProcessRecord()     at System.Management.Automation.CommandProcessor.ProcessRecord() (But PublishModule doesn't bother to return a functional Error object with an Exception, so we can't trust/parse or act on it. Just echo)
+2023-12-11 16:32:54 INFO:  : Waiting for:find-module -name verb-teams -Repository lyncRepo ...
+2023-12-11 16:33:04 INFO:  : Install-Module w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Name                           verb-teams                                                                                                                                                                                                             
+Repository                     lyncRepo                                                                                                                                                                                                               
+RequiredVersion                1.0.17                                                                                                                                                                                                                 
+scope                          CurrentUser                                                                                                                                                                                                            
+force                          True                                                                                                                                                                                                                   
+AllowClobber                   True                                                                                                                                                                                                                   
+errorVariable                  ismo_Err                                                                                                                                                                                                               
+ErrorAction                    Stop                                                                                                                                                                                                                   
+whatif                         False
+2023-12-11 16:33:39 VERBOSE:  : (no $ismo_Err: Install-Module had no errors)
+2023-12-11 16:33:39 INFO:  : Testing Module:Import-Module w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Name                           verb-teams                                                                                                                                                                                                             
+ErrorAction                    Stop                                                                                                                                                                                                                   
+errorVariable                  ipmo_Err                                                                                                                                                                                                               
+force                          True                                                                                                                                                                                                                   
+verbose                        True
+2023-12-11 16:33:40 VERBOSE:  : (no $ipmo_Err: test-ModuleManifest had no errors)
+2023-12-11 16:33:40 INFO:  : Retrieving matching Repo .nupkg file:
+gci \\lynmsv10\lync_fs\scripts\sc\verb-teams.1.0.17.nupkgl..
+2023-12-11 16:33:40 INFO:  : Proper updated .nupkg file found:verb-teams.1.0.17.nupkg, copying to local Pkg directory.
+2023-12-11 16:33:41 INFO:  : remove-UnneededFileVariants w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Path                           c:\sc\verb-teams\Package                                                                                                                                                                                               
+Include                        verb-teams*.nupkg                                                                                                                                                                                                      
+Pattern                                                                                                                                                                                                                                               
+FilterOn                       CreationTime                                                                                                                                                                                                           
+Keep                           2                                                                                                                                                                                                                      
+KeepToday                      True                                                                                                                                                                                                                   
+verbose                        True                                                                                                                                                                                                                   
+whatif                         False
+2023-12-11 16:33:41 INFO:  : remove-UnneededFileVariants w
+Name                           Value                                                                                                                                                                                                                  
+----                           -----                                                                                                                                                                                                                  
+Path                           c:\sc\verb-teams\Tests                                                                                                                                                                                                 
+Include                        ScriptAnalyzer-Results-*.xml                                                                                                                                                                                           
+Pattern                                                                                                                                                                                                                                               
+FilterOn                       CreationTime                                                                                                                                                                                                           
+Keep                           4                                                                                                                                                                                                                      
+KeepToday                      True                                                                                                                                                                                                                   
+verbose                        True                                                                                                                                                                                                                   
+whatif                         False
+2023-12-11 16:33:42 INFO:  : -RunTest specified: Running Pester Test script:
+c:\sc\verb-teams\Tests\verb-teams.tests.ps1
+
+2023-12-11 16:36:52 INFO:  : 
+---------------------------------------------------------------------------------
+Processing completed: verb-teams :: c:\sc\verb-teams
+- Script is currently installed (from PsRep: with scope:CurrentUser, under TORO\kadriTSS profile
+
+- To update other scopes/accounts on same machine, or install on other machines:
+    1. Uninstall current module copies:
+
+        Uninstall-Module -Name verb-teams) -AllVersion -whatif ;
+
+    2. Install the current version (or higher) from the Repo:lyncRepo:
+
+        install-Module -name verb-teams -Repository lyncRepo -MinimumVersion 1.0.17 -scope currentuser -whatif ;
+
+    3. Reimport the module with -force, to ensure the current installed verison is loaded:
+
+        import-Module -name verb-teams -force -verbose ;
+
+#-=-Stacked list: Unwrap to create a 1-liner for the above: CURRENTUSER =-=-=-=-=-=-=
+$whatif=$false ; $tMod = 'verb-teams' ; $tVer = '1.0.17' ;  $tScop = 'CurrentUser' ;
+TRY {
+Remove-Module -Name $tmod -ea 0 ;
+Uninstall-Module -Name $tmod -AllVersion -whatif:$($whatif) ;
+install-Module -name $tmod -Repository 'lyncRepo' -MinimumVersion $tVer -scope $tScop -AllowClobber -whatif:$($whatif) ;
+import-Module -name $tmod -force -verbose ;
+} CATCH {
+Write-Warning "Failed processing $($_.Exception.ItemName). 
+Error Message: $($_.Exception.Message)
+Error Details: $($_)" ; Break ;
+} ;
+#-=-=-=-=-=-=-=-=
+#-=-Stacked list: Unwrap to create a 1-liner for the above: ALLUSERS =-=-=-=-=-=-=
+$whatif=$false ; $tMod = 'verb-teams' ; $tVer = '1.0.17' ;  $tScop = 'AllUsers' ;
+TRY {
+Remove-Module -Name $tmod -ea 0 ;
+Uninstall-Module -Name $tmod -AllVersion -whatif:$($whatif) ;
+install-Module -name $tmod -Repository 'lyncRepo' -MinimumVersion $tVer -scope $tScop -AllowClobber -whatif:$($whatif) ;
+import-Module -name $tmod -force -verbose ;
+} CATCH {
+Write-Warning "Failed processing $($_.Exception.ItemName). 
+Error Message: $($_.Exception.Message)
+Error Details: $($_)" ; Break ;
+} ;
+#-=-=-=-=-=-=-=-=
+
+- You may also want to run the configured Pester Tests of the new script:
+
+        . c:\sc\verb-teams\Tests\verb-teams.tests.ps1
+
+Full Processing Details can be found in:
+
+c:\scripts\logs\update-NewModule-verb-teams-LOG-BATCH-EXEC-20231211-1629PM-log.txt
+
+---------------------------------------------------------------------------------
+
+2023-12-11 16:36:52 INFO:  : 
+(Processing log can be found at:c:\sc\verb-teams\c:\scripts\logs\update-NewModule-verb-teams-LOG-BATCH-EXEC-20231211-1629PM-log.txt)
