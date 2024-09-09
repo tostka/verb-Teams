@@ -5,7 +5,7 @@
 .SYNOPSIS
 verb-Teams - Powershell Teams generic functions module
 .NOTES
-Version     : 1.0.17.0
+Version     : 1.0.18.0
 Author      : Todd Kadrie
 Website     :	https://www.toddomation.com
 Twitter     :	@tostka
@@ -64,6 +64,7 @@ Function Connect-Teams {
     Github      : https://github.com/tostka
     Tags        : Powershell,Teams
     REVISIONS   :
+    * 1:30 PM 9/5/2024 added  update-SecurityProtocolTDO() SB to begin
     * 4:41 PM 7/27/2021 updates around pstitlebar & retire of sep SOL module - looks like the get-csTenant cmd would be good status check, but I'm getting errors on all -cs commands
     get-cstenant
 Exception calling "GetSteppablePipeline" with "1" argument(s): "Cannot process argument because the value of argument "commandInfo" is null. Change the value 
@@ -164,6 +165,23 @@ PARAMETERS
         [Parameter(HelpMessage="Debugging Flag [-showDebug]")]
         [switch] $showDebug
     ) ;
+	$Verbose = ($VerbosePreference -eq 'Continue')        
+	$CurrentVersionTlsLabel = [Net.ServicePointManager]::SecurityProtocol ; # Tls, Tls11, Tls12 ('Tls' == TLS1.0)  ;
+	write-verbose "PRE: `$CurrentVersionTlsLabel : $($CurrentVersionTlsLabel )" ; 
+	# psv6+ already covers, test via the SslProtocol parameter presense
+	if ('SslProtocol' -notin (Get-Command Invoke-RestMethod).Parameters.Keys) {
+		$currentMaxTlsValue = [Math]::Max([Net.ServicePointManager]::SecurityProtocol.value__,[Net.SecurityProtocolType]::Tls.value__) ; 
+		write-verbose "`$currentMaxTlsValue : $($currentMaxTlsValue )" ; 
+		$newerTlsTypeEnums = [enum]::GetValues('Net.SecurityProtocolType') | Where-Object { $_ -gt $currentMaxTlsValue }
+		if($newerTlsTypeEnums){
+			write-verbose "Appending upgraded/missing TLS `$enums:`n$(($newerTlsTypeEnums -join ','|out-string).trim())" ; 
+		} else {
+			write-verbose "Current TLS `$enums are up to date with max rev available on this machine" ; 
+		}; 
+		$newerTlsTypeEnums | ForEach-Object {
+			[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor $_
+		} ; 
+	} ;		
     # 12:10 PM 3/15/2017 disable prefix spec, unless actually blanked (e.g. centrally spec'd in profile).
     if(!$CommandPrefix){ $CommandPrefix='' ; } ;
 
@@ -476,8 +494,8 @@ Export-ModuleMember -Function Connect-Teams,cTmscmw,cTmstol,cTmstor,cTmsVEN,Disc
 # SIG # Begin signature block
 # MIIELgYJKoZIhvcNAQcCoIIEHzCCBBsCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUGlrJPccXJjytOUgiaXQCVWvJ
-# ArKgggI4MIICNDCCAaGgAwIBAgIQWsnStFUuSIVNR8uhNSlE6TAJBgUrDgMCHQUA
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUIthsU7cQH4WtLIHFQ7txBge6
+# vC6gggI4MIICNDCCAaGgAwIBAgIQWsnStFUuSIVNR8uhNSlE6TAJBgUrDgMCHQUA
 # MCwxKjAoBgNVBAMTIVBvd2VyU2hlbGwgTG9jYWwgQ2VydGlmaWNhdGUgUm9vdDAe
 # Fw0xNDEyMjkxNzA3MzNaFw0zOTEyMzEyMzU5NTlaMBUxEzARBgNVBAMTClRvZGRT
 # ZWxmSUkwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBALqRVt7uNweTkZZ+16QG
@@ -492,9 +510,9 @@ Export-ModuleMember -Function Connect-Teams,cTmscmw,cTmstol,cTmstor,cTmsVEN,Disc
 # AWAwggFcAgEBMEAwLDEqMCgGA1UEAxMhUG93ZXJTaGVsbCBMb2NhbCBDZXJ0aWZp
 # Y2F0ZSBSb290AhBaydK0VS5IhU1Hy6E1KUTpMAkGBSsOAwIaBQCgeDAYBgorBgEE
 # AYI3AgEMMQowCKACgAChAoAAMBkGCSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwG
-# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBQHqfGV
-# CMgO53IEw6+vLeXrIHCktTANBgkqhkiG9w0BAQEFAASBgKySCPnx2OC5PIgPnWFp
-# TNasOJQ1FKBA0uMkDNsSz5uVozk8ZipzOzsSxhRV12npXGrxliwOSHOiJfjpwpFg
-# +n108quwa28AncDQUrrWFliORIVqo7mEyAxDB8GX9ycq3gqX9MdclhjTJ52YAGR9
-# 8qo2Eu7/PJIN4p7m0jH0pCxb
+# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBSuXA1+
+# aWE/TjoMCC8nssXOHaLlpzANBgkqhkiG9w0BAQEFAASBgASBNmbxWLmooUc6UFXW
+# xqsdpUJ5n6Aos1bTaq8L4gKBcVCB88h+iWgbyeW18vgzk8p+rzSFUQjyIKwkp3gc
+# UPqeTXw9Qgr/5g8fcASdqTWvgfyJkQwevf1JyeR6GMnwXDi88EBBZTo9ounSz6wl
+# 94mI7kRtCEJhaEEBn88UN9xU
 # SIG # End signature block
